@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+
+
+def usage
+  STDERR.write "./stddev [-r <d>] < <one number per line>\n"
+  exit 1
+end
+usage if not [0,2].include? ARGV.size
+
+opts = Trollop::options do
+  opt :round, "Number of digits after decimal point.", :type => :int, :default => -1
+end
+
+
+sum = 0.0
+i = 0
+cached = []
+while line=STDIN.gets
+  v = line.strip.to_f
+  sum += v
+  cached << v
+  i +=1 
+end
+
+avg = sum/i.to_f
+
+var = 0
+cached.each { |v|
+  var += (avg - v)**2
+}
+
+if opts[:round] >= 0 
+  puts var.round opts[:round]
+else
+  puts var
+end
+

@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+def downcase?(string)
+  string[/[[:lower:]]/]
+end
+
+while line = STDIN.gets
+  puts line.strip if downcase? line[0]
+end
+

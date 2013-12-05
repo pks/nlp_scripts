@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+STDOUT.set_encoding 'utf-8'
+
+def usage
+  STDERR.write "merge_files [file]+\n"
+  exit 1
+end
+usage if ARGV.size==0
+
+
+files = ARGV
+dicts = []
+
+files.each { |i|
+  dicts.push Hash.new
+  dicts.last.default = 0
+  File.open i, "r:UTF-8" do |f|
+    while line = f.gets
+      dicts.last[line.strip] += 1
+    end
+  end
+}
+
+dicts.each { |h|
+  h.each { |k,v|
+    counts = []
+    dicts.each { |j| counts.push j[k]; j.delete k }
+    counts.max.times { puts k }
+  }
+}
+

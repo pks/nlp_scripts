@@ -1,0 +1,11 @@
+#!/usr/bin/python
+
+import sys
+from itertools import izip
+
+
+for linenr, (src_line, tgt_line) in enumerate(izip(open(sys.argv[1]), open(sys.argv[2]))):
+  print linenr, (src_line.strip())
+  print linenr, (tgt_line.strip())
+  print
+  

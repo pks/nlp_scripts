@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+def ngrams_it(s, n, fix=false)
+  a = s.strip.split
+  a.each_with_index { |tok, i|
+    tok.strip!
+    0.upto([n-1, a.size-i-1].min) { |m|
+      yield a[i..i+m] if !(fix^(a[i..i+m].size==n))
+    }
+  }
+end
+
+def main(n, fix, sep)
+  STDIN.set_encoding 'utf-8'
+  STDOUT.set_encoding 'utf-8'
+  while line = STDIN.gets
+    a = []
+    ngrams_it(line, n, fix) {|ng| a << ng.join(' ')}
+    a.reject! {|i| i.strip.size==0 }
+    puts a.join sep if a.size > 0
+  end
+end
+
+def usage
+  STDERR.write "./ng [-n <n>] [--fix] [--separator <s>] < <one number per line>\n"
+  exit 1
+end
+
+if __FILE__ == $0
+  require 'trollop'
+  opts = Trollop::options do
+    opt :n, "Ngrams", :type => :int, :default => 4
+    opt :fix, "Don't output lower order Ngrams.", :type => :bool, :default => true
+    opt :separator, "separte ngrams of a line by this string", :type => :string, :default => "\n"
+  end
+  usage if not [0,2,4,6].include? ARGV.size
+  main(opts[:n], opts[:fix], opts[:separator])
+end
+

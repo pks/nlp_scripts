@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+while line = STDIN.gets
+  puts line.lstrip.strip
+end
+

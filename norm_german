@@ -1,0 +1,93 @@
+#!/usr/bin/env ruby
+
+require 'thread'
+require 'trollop'
+
+
+STDIN.set_encoding 'utf-8'
+STDOUT.set_encoding 'utf-8'
+
+def usage
+  STDERR.write "./avg [-r <d>] < <one number per line>\n"
+  exit 1
+end
+usage if not [0,2,4].include? ARGV.size
+
+opts = Trollop::options do
+  opt :upper, "uppercase", :type => :bool, :default => false
+  opt :threads, "#threads", :type => :int, :default => 1, :short => '-h'
+  opt :shard_size, "shard size", :type => :int, :default => 1000
+  opt :train, "train", :type => :bool
+  opt :apply, "apply", :type => :bool
+end
+
+
+pairs_lower = [ ['ß','ss'], ['ue', 'ü'], ['ae','ä'], ['oe', 'ö'] ]
+pairs_upper = [ ['Ä', 'Ae'], ['Ö', 'Oe'], ['Ü', 'Ue'] ]
+if opts[:upper]
+  PAIRS = pairs_lower
+else
+  PAIRS = pairs_lower+pairs_upper
+end
+
+def get_key(old, new)
+  PAIRS.each { |i|
+    return old if new.gsub(i[0], i[1])==old
+    return old if new.gsub(i[1], i[0])==old
+  }
+  return nil
+end
+
+def build_partial(tokens)
+  h = {}
+  tokens.each { |tok|
+    found = false
+    h.keys.each { |i|
+      if get_key i, tok
+        h[i] << tok
+        found = true
+        break 
+      end
+    }
+    h[tok] = [tok] if !found
+  }
+  return h
+end
+
+h = {}
+threads = []
+thread_n = 0
+counter = 0
+token_stock = []
+mutex = Mutex.new
+while tok = STDIN.gets # expects stream of (lowercased) tokens
+  token_stock << [] if !token_stock[thread_n]
+  token_stock[thread_n] << tok.strip!
+  counter += 1
+  if token_stock[thread_n].size%opts[:shard_size]==0
+    STDERR.write "Starting thread ##{thread_n}\n"
+    threads << Thread.new(token_stock[thread_n]) { |tokens|
+      th = build_partial tokens
+      mutex.synchronize do
+        h.merge! th 
+      end
+    }
+    threads.last.abort_on_exception = true
+    thread_n += 1
+  else 
+    next
+  end
+  if thread_n==opts[:threads]
+    threads.each { |i|  i.join }
+    token_stock.each { |i| i.clear }
+    thread_n = 0
+  end
+  STDERR.write "#keys #{h.keys.size}\n"
+end
+
+token_stock.each { |i|
+  if i.size!=0  
+    h.merge! build_partial i
+  end
+}
+

@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+max = -1.0/0
+while line = STDIN.gets
+  v = line.strip.to_f 
+  max = v if v > max
+end
+puts max
+

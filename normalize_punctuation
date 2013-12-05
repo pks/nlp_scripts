@@ -1,0 +1,46 @@
+#!/usr/bin/perl -w
+# adapted from the moses scripts
+
+use strict;
+
+my ($language) = @ARGV;
+
+while(<STDIN>) {
+    s/\r//g;
+    # normalize unicode punctuation
+    s/„/\"/g;
+    s/“/\"/g;
+    s/”/\"/g;
+    s/–/-/g;
+    s/—/ - /g; s/ +/ /g;
+    s/´/\'/g;
+    s/([a-z])‘([a-z])/$1\'$2/gi;
+    s/([a-z])’([a-z])/$1\'$2/gi;
+    s/‘/\"/g;
+    s/‚/\"/g;
+    s/’/\"/g;
+    s/''/\"/g;
+    s/´´/\"/g;
+    s/…/.../g;
+    # French quotes
+    s/ « / \"/g;
+    s/« /\"/g;
+    s/«/\"/g;
+    s/ » /\" /g;
+    s/ »/\"/g;
+    s/»/\"/g;
+    # handle pseudo-spaces
+    s/ \%/\%/g;
+    s/nº /nº /g;
+    s/ :/:/g;
+    s/ ºC/ ºC/g;
+    s/ cm/ cm/g;
+    s/ \?/\?/g;
+    s/ \!/\!/g;
+    s/ ;/;/g;
+    s/, /, /g; s/ +/ /g;
+
+    print STDERR $_ if /﻿/;
+
+    print $_;
+}

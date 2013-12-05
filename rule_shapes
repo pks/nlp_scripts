@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+STDIN.set_encoding 'utf-8'
+STDOUT.set_encoding 'utf-8'
+
+def shape s
+  res  = []
+  in_t = false
+  s.split.each { |i|
+    if i.match /\A\[X,\d\]\z/
+      if in_t
+        in_t = false
+      end
+      res << "NT"
+      next
+    else
+      res << "T" if not in_t
+      in_t = true
+    end
+  }
+  return res
+end
+
+while line = STDIN.gets
+  f,e = line.split "\t"
+  f.strip!; e.strip!
+  puts shape(f).join('_')+"-"+shape(e).join('_')
+end
+

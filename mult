@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+puts STDIN.gets.to_f * ARGV[0].to_f
+

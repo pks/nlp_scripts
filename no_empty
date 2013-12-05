@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+files = []
+(0..1).each { |i| files << File.new(ARGV[i], 'r') }
+(2..3).each { |i| files << File.new(ARGV[i], 'w') }
+files.each { |f| f.set_encoding('utf-8') }
+
+while line_f = files[0].gets
+  line_e = files[1].gets 
+  line_f.strip!; line_e.strip!
+  next if line_f=='' || line_e==''
+  files[2].write line_f+"\n"
+  files[3].write line_e+"\n"
+end
+
+files.each { |f| f.close }
+

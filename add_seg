@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+
+
+STDIN.set_encoding 'utf-8'
+STDOUT.set_encoding 'utf-8'
+
+def usage
+  puts "addseg [--nogz] [--loo] [--grammar] <path to grammars dir>\n"
+  exit 1
+end
+
+opts = Trollop::options do
+  opt :grammar, "(Abs) path of folder containing grammar.", :type => :string, :short => '-g', :required => true
+  opt :loo, "leave one out", :type => :bool, :default => false
+  opt :start_id, "start with this id", :type => :int, :default => 0, :short => '-i'
+  opt :nogz, "grammar files not gzipped", :type => :bool, :default => false
+end
+
+
+i = opts[:start_id]
+while line = STDIN.gets
+  ext = '.gz'
+  ext = '' if opts[:nogz]
+  s = "<seg"
+  if opts[:loo] then s += " exclude=\"#{i}\"" end
+  if opts[:grammar] then s += " grammar=\"#{opts[:grammar]}/grammar.#{i}#{ext}\"" end
+  puts s + " id=\"#{i}\"> #{line.strip} </seg>"
+  i+=1
+end
+

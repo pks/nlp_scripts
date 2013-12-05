@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+h = {}
+h.default = 0 
+while line = STDIN.gets
+  line.strip! 
+  h[line] += 1
+end
+
+h.each_pair {|k,v| puts "#{k} #{v}"}
+
