@@ -5,7 +5,7 @@ def ngrams_it(s, n, fix=false)
   a.each_with_index { |tok, i|
     tok.strip!
     0.upto([n-1, a.size-i-1].min) { |m|
-      yield a[i..i+m] if !(fix^(a[i..i+m].size==n))
+      yield a[i..i+m] if !(fix||(a[i..i+m].size>n))
     }
   }
 end
@@ -30,7 +30,7 @@ if __FILE__ == $0
   require 'trollop'
   opts = Trollop::options do
     opt :n, "Ngrams", :type => :int, :default => 4
-    opt :fix, "Don't output lower order Ngrams.", :type => :bool, :default => true
+    opt :fix, "Don't output lower order Ngrams.", :type => :bool, :default => false
     opt :separator, "separte ngrams of a line by this string", :type => :string, :default => "\n"
   end
   usage if not [0,2,4,6].include? ARGV.size
