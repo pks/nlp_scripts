@@ -1,5 +1,5 @@
 #!/bin/zsh
 
 LANG=$1
-~/scripts/htmlentities 2>htmlentities.$LANG.err | ~/scripts/normalize-punctuation 2>normalize-punctuation.$LANG.err | ~/moses/scripts/tokenizer/tokenizer.perl -a -b -threads 1 -l $LANG 2>tokenizer.$LANG.err | ~/moses/scripts/tokenizer/lowercase.perl 2>lowercase.$LANG.err
+/toolbox/scripts/htmlentities 2>htmlentities.$LANG.err | /toolbox/scripts/normalize_punctuation 2>normalize-punctuation.$LANG.err | /toolbox/moses/scripts/tokenizer/tokenizer.perl -a -b -threads 1 -l $LANG 2>tokenizer.$LANG.err | /toolbox/moses/scripts/tokenizer/lowercase.perl 2>lowercase.$LANG.err
 
