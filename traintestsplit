@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+
+
+def main
+  opts = Trollop::options do
+    opt :foreign, "foreign file", :type => :string, :required => true
+    opt :english, "english file", :type => :string, :required => true
+    opt :size, "one size", :type => :int, :required => true
+    opt :repeat, "number of repetitions", :type => :int, :default => 1
+    opt :prefix, "prefix for output files", :type => :string
+  end
+  fn = opts[:foreign]
+  fn_ext = fn.split('.').last
+  f = File.new(fn, 'r').readlines
+  en = opts[:english]
+  en_ext = en.split('.').last
+  e = File.new(en, 'r').readlines
+  size = opts[:size]
+  nlines_f = `wc -l #{fn}`.split()[0].to_i
+  nlines_e = `wc -l #{en}`.split()[0].to_i
+  if nlines_f!=nlines_e 
+    STDERR.write "Unbalanced files (#{nlines_f} vs. #{nlines_e}), exiting!\n"
+    exit 1
+  end
+
+  prefix = opts[:prefix]
+  a = (0..nlines_e-1).to_a
+  i = 0
+  opts[:repeat].times {
+    b = a.sample(size)
+    ax = a.reject{|j| b.include? j}
+    `mkdir split_#{i}`
+    new_f = File.new "split_#{i}/#{prefix}.train.#{i}.#{fn_ext}", 'w+'
+    new_e = File.new "split_#{i}/#{prefix}.train.#{i}.#{en_ext}", 'w+'
+    ax.each { |j|
+      new_f.write f[j]
+      new_e.write e[j]
+    }
+    new_f.close; new_e.close
+    new_f = File.new "split_#{i}/#{prefix}.test.#{i}.#{fn_ext}", 'w+'
+    new_e = File.new "split_#{i}/#{prefix}.test.#{i}.#{en_ext}", 'w+'
+    b.each { |j|
+      new_f.write f[j]
+      new_e.write e[j]
+    }
+    new_f.close; new_e.close
+    i += 1
+  }
+end
+
+
+main
+
