@@ -16,7 +16,7 @@ end
 def brevity_penalty hypothesis, reference
   a = hypothesis.split; b = reference.split
   return 1.0 if a.size>b.size
-  return Math.exp(1.0 - b.size.to_f/a.size);
+  return Math.exp(1.0 - ((b.size.to_f+1)/a.size));
 end
 
 def per_sentence_bleu hypothesis, reference, n=4
