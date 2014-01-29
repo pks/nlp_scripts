@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
+require 'nlp_ruby'
+
 
 prev_idx = nil
 while line = STDIN.gets
   line.strip!
-  idx = line.split('|||')[0].to_i
-  if idx != prev_idx 
+  idx = splitpipe(line)[0].to_i
+  if idx != prev_idx
     puts line
     prev_idx = idx
   end

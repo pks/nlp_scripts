@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 
+
 min = 1.0/0
 while line = STDIN.gets
-  v = line.strip.to_f 
-  min = v if v < min
+  v = line.to_f
+  min = v if v<min
 end
+
 puts min
 

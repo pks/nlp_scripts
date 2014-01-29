@@ -3,11 +3,12 @@
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
+
 def shape s
   res  = []
   in_t = false
   s.split.each { |i|
-    if i.match /\A\[X,\d\]\z/
+    if i.match(/\A\[X,\d\]\z/)
       if in_t
         in_t = false
       end
@@ -22,7 +23,7 @@ def shape s
 end
 
 while line = STDIN.gets
-  f,e = line.split "\t"
+  f, e = line.split(/\t/)
   f.strip!; e.strip!
   puts shape(f).join('_')+"-"+shape(e).join('_')
 end

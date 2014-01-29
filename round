@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
 
-puts STDIN.gets.to_f.round ARGV[0].to_i
+
+r = ARGV[0].to_i
+while line = STDIN.gets
+  puts line.to_f.round r
+end
 

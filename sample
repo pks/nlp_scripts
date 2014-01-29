@@ -2,23 +2,16 @@
 
 require 'trollop'
 
-
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-def usage
-  STDERR.write "./sample --size <n> < <line separated data>\n"
-  exit 1
-end
-usage if ARGV.size!=4
 
 opts = Trollop::options do
+  banner "sample --size <n> < <line separated data>"
   opt :size, "Sample n% (percentage).", :type => :int
 end
 
-
 prng = Random.new(Random.new_seed)
-
 while line = STDIN.gets
   STDOUT.write line if prng.rand(1..opts[:size])==0
 end

@@ -1,29 +1,21 @@
 #!/usr/bin/env ruby
 
+require 'nlp_ruby'
 require 'trollop'
 
 
-def ngrams_it(s, n, fix=false)
-  a = s.strip.split
-  a.each_with_index { |tok, i|
-    tok.strip!
-    0.upto([n-1, a.size-i-1].min) { |m|
-      yield a[i..i+m] if !(fix||(a[i..i+m].size>n))
-    }
-  }
+# reference-length hack as in (Nakov et al., 2012)
+def brevity_penalty hypothesis, reference, hack=0
+  a = tokenize hypothesis; b = tokenize reference
+  return 1.0 if a.size>=b.size
+  return Math.exp(1.0 - ((b.size.to_f+hack)/a.size));
 end
 
-def brevity_penalty hypothesis, reference
-  a = hypothesis.split; b = reference.split
-  return 1.0 if a.size>b.size
-  return Math.exp(1.0 - ((b.size.to_f+1)/a.size));
-end
-
-def per_sentence_bleu hypothesis, reference, n=4
+def per_sentence_bleu hypothesis, reference, n=4, hack=0
   h_ng = {}; r_ng = {}
   (1).upto(n) {|i| h_ng[i] = []; r_ng[i] = []}
-  ngrams_it(hypothesis, n) {|i| h_ng[i.size] << i}
-  ngrams_it(reference, n) {|i| r_ng[i.size] << i}
+  ngrams(hypothesis, n) {|i| h_ng[i.size] << i}
+  ngrams(reference, n) {|i| r_ng[i.size] << i}
   m = [n, reference.split.size].min
   weight = 1.0/m
   add = 0.0
@@ -35,31 +27,29 @@ def per_sentence_bleu hypothesis, reference, n=4
     add = 1.0 if i >= 2
     sum += weight * Math.log((counts_clipped + add)/(counts_sum + add));
   }
-  return brevity_penalty(hypothesis, reference) * Math.exp(sum)
+  return brevity_penalty(hypothesis, reference, hack) * Math.exp(sum)
 end
 
 def main
-  opts = Trollop::options do
+  cfg = Trollop::options do
     opt :input, "input", :type => :string, :default => '-'
     opt :references, "references", :type => :string, :required => true
+    opt :len_hack, "hack of Nakov et al", :type => :int, :default => 0
+    opt :n, "N", :default => 4
   end
- 
-  refs = File.new(opts[:references], 'r').readlines.map{|i|i.strip} 
+
+  refs = ReadFile.new(cfg[:references]).readlines_strip
   i = -1
-  if opts[:input] == '-'
-    input = STDIN 
-  else
-    input = File.new opts[:input], 'r'
-  end
+  input = ReadFile.new cfg[:input]
   while line = input.gets
     i += 1
     if line.strip == ''
       puts 0.0
       next
     end
-    puts per_sentence_bleu line.strip, refs[i]
+    puts per_sentence_bleu line.strip, refs[i], cfg[:n], cfg[:len_hack]
   end
-  input.close if opts[:input]!='-'
+  input.close
 end
 
 

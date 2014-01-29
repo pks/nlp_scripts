@@ -1,46 +1,34 @@
 #!/usr/bin/env ruby
 
+require 'nlp_ruby'
 require 'trollop'
 require 'zlib'
 
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
-
-opts = Trollop::options do
+cfg = Trollop::options do
+  opt :weights_files, "a number of weights files: name value", :required => true
   opt :filter, "Filter if key does not appear in every file.", :type => :bool, :default => false
 end
 
-def usage
-  puts "avg_weights_filter [--filter] <filename>+"
-  exit 1
-end
-usage if ARGV.size==0
-
-
 h = {}
 ARGV.each { |fn|
-if File.extname(fn)=='.gz'
-  f = Zlib::GzipReader.new(File.new(fn, 'rb'))
-else
-  f = File.new fn, 'r'
-end
-while line = f.gets
-  k, v = line.split
-  v = v.to_f
-  if h.has_key? k
-    h[k] << v
-  else
-    h[k] = [v]
+  f = ReadFile.new fn
+  while line = f.gets
+    k, v = line.split
+    v = v.to_f
+    if h.has_key? k
+      h[k] << v
+    else
+      h[k] = [v]
+    end
   end
-end
-f.close
+  f.close
 }
 
 n = ARGV.size.to_f
 
-h.each_pair { |k,a|
-  next if opts[:filter] and a.size < n
-  puts "#{k} #{a.inject(:+)/n}"
+h.each_pair { |k,w|
+  next if cfg[:filter] and w.size < n
+  puts "#{k} #{w.inject(:+)/n}"
 }
 

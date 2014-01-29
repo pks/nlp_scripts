@@ -3,17 +3,12 @@
 require 'thread'
 require 'trollop'
 
-
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-def usage
-  STDERR.write "./avg [-r <d>] < <one number per line>\n"
-  exit 1
-end
-usage if not [0,2,4].include? ARGV.size
 
-opts = Trollop::options do
+cfg = Trollop::options do
+  banner "norm_german < <file w/ lowercased tokens>"
   opt :upper, "uppercase", :type => :bool, :default => false
   opt :threads, "#threads", :type => :int, :default => 1, :short => '-h'
   opt :shard_size, "shard size", :type => :int, :default => 1000
@@ -21,10 +16,9 @@ opts = Trollop::options do
   opt :apply, "apply", :type => :bool
 end
 
-
 pairs_lower = [ ['ß','ss'], ['ue', 'ü'], ['ae','ä'], ['oe', 'ö'] ]
 pairs_upper = [ ['Ä', 'Ae'], ['Ö', 'Oe'], ['Ü', 'Ue'] ]
-if opts[:upper]
+if cfg[:upper]
   PAIRS = pairs_lower
 else
   PAIRS = pairs_lower+pairs_upper
@@ -46,7 +40,7 @@ def build_partial(tokens)
       if get_key i, tok
         h[i] << tok
         found = true
-        break 
+        break
       end
     }
     h[tok] = [tok] if !found
@@ -60,24 +54,24 @@ thread_n = 0
 counter = 0
 token_stock = []
 mutex = Mutex.new
-while tok = STDIN.gets # expects stream of (lowercased) tokens
+while tok = STDIN.gets
   token_stock << [] if !token_stock[thread_n]
   token_stock[thread_n] << tok.strip!
   counter += 1
-  if token_stock[thread_n].size%opts[:shard_size]==0
+  if token_stock[thread_n].size%cfg[:shard_size]==0
     STDERR.write "Starting thread ##{thread_n}\n"
     threads << Thread.new(token_stock[thread_n]) { |tokens|
       th = build_partial tokens
       mutex.synchronize do
-        h.merge! th 
+        h.merge! th
       end
     }
     threads.last.abort_on_exception = true
     thread_n += 1
-  else 
+  else
     next
   end
-  if thread_n==opts[:threads]
+  if thread_n==cfg[:threads]
     threads.each { |i|  i.join }
     token_stock.each { |i| i.clear }
     thread_n = 0
@@ -86,7 +80,7 @@ while tok = STDIN.gets # expects stream of (lowercased) tokens
 end
 
 token_stock.each { |i|
-  if i.size!=0  
+  if i.size!=0
     h.merge! build_partial i
   end
 }

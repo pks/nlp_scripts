@@ -1,11 +1,14 @@
 #!/usr/bin/env ruby
 
+STDIN.set_encoding 'utf-8'
+STDOUT.set_encoding 'utf-8'
+
 h = {}
-h.default = 0 
+h.default = 0
 while line = STDIN.gets
-  line.strip! 
+  line.strip!
   h[line] += 1
 end
 
-h.each_pair {|k,v| puts "#{k} #{v}"}
+h.each_pair { |k,v| puts "#{k} #{v}" }
 

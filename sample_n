@@ -3,20 +3,13 @@
 require 'trollop'
 
 
-def usage
-  STDERR.write "./sample --size <n> --population <n>\n"
-  exit 1
-end
-usage if ARGV.size!=4
-
 opts = Trollop::options do
+  banner "sample --size <n> --population <n>"
   opt :size, "Sample size (percentage).", :type => :int
   opt :population, "'Population' (number \in N)", :type => :int
 end
 
-
 prng = Random.new(Random.new_seed)
-
 1.upto(opts[:population]) { |i|
   puts i if prng.rand(1..opts[:size])==0
 }

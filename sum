@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 
+
 sum = 0.0
 while line = STDIN.gets
-  sum += line.strip.to_f
+  sum += line.to_f
 end
+
 puts sum
 

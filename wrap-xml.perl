@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 # original: https://smt.googlecode.com/svn/trunk/moses64/tools/scripts/wrap-xml.perl
+# (licensed under LGPL)
 
 use strict;
 

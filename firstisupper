@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-def downcase?(string)
-  string[/[[:lower:]]/]
-end
+require 'nlp_ruby'
+
 
 while line = STDIN.gets
   puts line.strip if downcase? line[0]

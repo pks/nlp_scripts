@@ -2,24 +2,19 @@
 
 require 'trollop'
 
-
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-def usage
-  STDERR.write "splitpipes -f <n> < <input>\n"
-  exit 1
-end
-usage if ARGV.size!=2
 
-opts = Trollop::options do
+cfg = Trollop::options do
+  banner "splitpipes -f <n> < <input>"
   opt :field, "field", :type => :int
 end
 
 while line = STDIN.gets
   j = 1
   line.strip.split(' ||| ').each { |i|
-    if j == opts[:field]
+    if j == cfg[:field]
       puts i.strip
       break
     end

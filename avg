@@ -3,28 +3,22 @@
 require 'trollop'
 
 
-def usage
-  STDERR.write "./avg [-r <d>] < <one number per line>\n"
-  exit 1
-end
-usage if not [0,2].include? ARGV.size
-
-opts = Trollop::options do
+cfg = Trollop::options do
+  banner "avg < <one number per line>"
   opt :round, "Number of digits after decimal point.", :type => :int, :default => -1
 end
 
-
 sum = 0.0
 i = 0
-while line=STDIN.gets
-  sum += line.strip.to_f
+while line = STDIN.gets
+  sum += line.to_f
   i +=1
 end
 
 avg = sum/i.to_f
 
-if opts[:round] >= 0
-  puts avg.round opts[:round]
+if cfg[:round] >= 0
+  puts avg.round cfg[:round]
 else
   puts avg
 end

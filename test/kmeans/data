@@ -1,0 +1,9 @@
+d00 feature_0=1.0 feature_1=0.5
+d01 feature_0=1.5 feature_1=0.4
+d02 feature_0=1.8 feature_1=0.3
+d10 feature_1=0.5 feature_2=1.0
+d11 feature_1=0.4 feature_2=2.0
+d12 feature_1=0.6 feature_2=1.5
+d20 feature_2=0.2 feature_3=1.0
+d21 feature_2=0.5 feature_3=2.0
+d22 feature_2=0.6 feature_3=3.0

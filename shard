@@ -12,11 +12,11 @@ def make_shards(input, refs, alignments, output_prefix, num_shards=2, rand=false
   index.shuffle! if rand
   shard_sz = lc / num_shards
   leftover = lc % num_shards
-  in_f = File.new input, 'r'
+  in_f = ReadFile.new input
   in_lines = in_f.readlines
-  refs_f = File.new refs, 'r'
+  refs_f = ReadFile.new refs
   refs_lines = refs_f.readlines
-  a_f = File.new alignments, 'r'
+  a_f = ReadFile.new alignments
   a_lines = a_f.readlines
   shard_in_files = []
   shard_refs_files = []
@@ -26,13 +26,13 @@ def make_shards(input, refs, alignments, output_prefix, num_shards=2, rand=false
   a_fns = []
   0.upto(num_shards-1) { |shard|
     in_fn = "#{output_prefix}.#{shard}.#{input_ext}"
-    shard_in = File.new in_fn, 'w+'
+    shard_in = WriteFile.new in_fn
     in_fns << in_fn
     refs_fn = "#{output_prefix}.#{shard}.#{refs_ext}"
-    shard_refs = File.new refs_fn, 'w+'
+    shard_refs = WriteFile.new refs_fn
     refs_fns << refs_fn
     a_fn = "#{output_prefix}.#{shard}.a"
-    shard_a = File.new a_fn, 'w+'
+    shard_a = WriteFile.new a_fn
     a_fns << a_fn
     0.upto(shard_sz-1) { |i|
       j = index.pop
@@ -69,12 +69,12 @@ def make_shards(input, refs, alignments, output_prefix, num_shards=2, rand=false
 end
 
 opts = Trollop::options do
-  opt :input, 'input', :type => :string
-  opt :references, 'references', :type => :string
-  opt :alignments, 'alignments', :type => :string
-  opt :output_prefix, 'output prefix', :type => :string
+  opt :input, 'input', :type => :string, :required => true
+  opt :references, 'references', :type => :string, :required => true
+  opt :alignments, 'alignments', :type => :string, :required => true
+  opt :output_prefix, 'output prefix', :type => :string, :required => true
   opt :randomize, 'randomize', :type => :bool, :default => false, :short => '-z'
-  opt :num_shards, 'number of shards', :type => :int
+  opt :num_shards, 'number of shards', :type => :int, :required => true
 end
 
 make_shards(opts[:input], opts[:references], opts[:alignments], opts[:output_prefix], opts[:num_shards], opts[:randomize])
