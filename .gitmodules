@@ -1,0 +1,3 @@
+[submodule "memusg"]
+	path = memusg
+	url = https://gist.github.com/526585.git
