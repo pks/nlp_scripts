@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+require 'nlp_ruby'
+require 'trollop'
+
+
+def get_context kbest_lists, references, n
+  a = []
+  kbest_lists.each_index { |i|
+    a << BLEU::get_counts(kbest_lists[i][0].s, references[i], n, 1)
+  }
+  return a
+end
+
+def main
+  cfg = Trollop::options do
+    opt :kbest_lists, "kbest lists", :type => :string, :required => true
+    opt :references, "reference", :type => :string, :required => true
+    opt :n, "N for BLEU", :type => :int, :default => 4
+    opt :weight, "how much to weigh single translations", :type => :int, :default => 1
+    opt :debug, "debug mode", :type => :bool, :default => false
+  end
+  debug = cfg[:debug]
+  n = cfg[:n]
+  kbest_lists = read_kbest_lists cfg[:kbest_lists]
+  references = ReadFile.new(cfg[:references]).readlines_strip
+  context = get_context kbest_lists, references, n
+  kbest_lists.each_with_index { |kbest,j|
+    scores = []
+    max_score = -1.0/0
+    max_idx = -1
+    kbest.each_index { |i|
+      context_cp = context.dup
+      context_cp[j] = BLEU::get_counts kbest[i].s, references[j], n, cfg[:weight]
+      score = BLEU::hbleu(context_cp, n, debug)
+      scores << score
+      if score > max_score
+        max_score = score
+        max_idx = i
+      end
+      STDERR.write "#{i} #{kbest[i]}\t#{score}\n---\n" if debug
+    }
+    puts "#{references[j]}"
+    puts "BLEU=#{scores[0]} ||| #{kbest[0]}"
+    puts "BLEU=#{max_score} ||| #{kbest[max_idx]}"
+    puts
+    STDERR.write "\n" if debug
+  }
+end
+
+
+main
+
