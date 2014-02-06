@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'bloom-filter'
+require 'trollop'
+
+STDIN.set_encoding 'utf-8'
+STDOUT.set_encoding 'utf-8'
+
+cfg = Trollop::options do
+  opt :size, "number of entries in the filter", :type => :int, :required => true
+  opt :error_rate, "error rate", :type => :float, :default => 0.01
+end
+
+f = BloomFilter.new cfg[:size], cfg[:error_rate]
+while line = STDIN.gets
+  src, tgt = splitpipe(line)[0..1]
+  src.strip!
+  tgt.strip!
+  f.insert(src+" ||| "+tgt)
+end
+
+f.dump('pt.bloom')
+f.close
+
