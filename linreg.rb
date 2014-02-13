@@ -4,7 +4,7 @@ require 'nlp_ruby'
 require 'trollop'
 
 
-def read_data fn
+def read_data fn, scale
   f = ReadFile.new fn
   data = []
   while line = f.gets
@@ -16,6 +16,12 @@ def read_data fn
     v.from_a(a)
     data << v
   end
+  if scale
+    data.map { |i| i.keys }.flatten.uniq.each { |k|
+      max = data.map { |i| i[k] }.max
+      data.each { |i| i[k] /= max }
+    }
+  end
   return data  
 end
 
@@ -25,8 +31,10 @@ def main
     opt :output,        "output data",        :type => :string, :required => true
     opt :learning_rate, "learning rate",      :type => :float,  :default => 0.07
     opt :stop,          "stopping criterion", :type => :int,    :default => 100
+    opt :scale_features,"scale features",     :type => :bool,   :default => false, :short => '-t'
+    opt :show_loss,     "show loss per iter", :type => :bool,   :default => false
   end
-  data = read_data cfg[:input]
+  data = read_data cfg[:input], cfg[:scale_features]
   zeros = [0.0]*data[0].size
   t = ReadFile.new(cfg[:output]).readlines.map{ |i| i.to_f }
   model = SparseVector.new zeros
@@ -36,9 +44,13 @@ def main
   while true
     i += 1
     u = SparseVector.new zeros
+    overall_loss = 0.0
     data.each_with_index { |d,j|
-      u += d * ((model.dot(d) - t[j])*(1.0/t.size))
+      loss = model.dot(d) - t[j]
+      overall_loss += loss**2
+      u += d * loss *(1.0/t.size)
     }
+    STDERR.write "#{i} #{overall_loss/data.size}\n" if cfg[:show_loss]
     u *= cfg[:learning_rate]
     model -= u
     if model.approx_eql? prev_model 
