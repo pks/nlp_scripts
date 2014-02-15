@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require 'nlp_ruby'
+require 'trollop'
+require 'tempfile'
+
+
+def main
+  cfg = Trollop::options do
+    opt :input, "input", :type => :string, :default => '-'
+    opt :references, "references", :type => :string, :required => true
+    opt :mteval_bin, "cdec's mteval/fast_score", :type => :string, :default => '`/toolbox/cdec-dtrain/mteval/fast_score'
+  end
+
+  refs = ReadFile.readlines_strip cfg[:references]
+  input = ReadFile.new cfg[:input]
+  i = -1
+  while line = input.gets
+    line.strip!
+    i += 1
+    a = Tempfile.new 'pster'
+    b = Tempfile.new 'pster'
+    a.write line+"\n"
+    b.write refs[i]+"\n"
+    a.close; b.close
+    score = `/toolbox/cdec-dtrain/mteval/fast_score -i #{a.path} -r #{b.path} -m ter 2>/dev/null`
+    puts score
+    a.unlink; b.unlink
+  end
+  input.close
+end
+
+
+main
+

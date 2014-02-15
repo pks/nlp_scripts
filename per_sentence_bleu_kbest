@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require 'nlp_ruby'
+require 'trollop'
+
+
+def main
+  cfg = Trollop::options do
+    opt :kbests, "kbests", :type => :string, :default => '-'
+    opt :references, "references", :type => :string, :required => true
+  end
+  refs = ReadFile.new cfg[:references]
+  kbest_lists = read_kbest_lists cfg[:kbests]
+  i = 0
+  kbest_lists.each { |list|
+    scores = []
+    o = false
+    list.each { |e| scores << per_sentence_bleu(e, refs[i]) }
+    max = scores.max
+    scores.each_with_index { |x,j|
+      puts "#{j+1} ||| #{scores[j]} ||| #{list[j]}"
+      if scores[j]==max && !o
+        puts "^^^ #{j+1} #{max}" 
+        o = true
+      end
+    }
+    puts
+    i += 1
+  }
+end
+
+
+main
+
