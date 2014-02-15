@@ -9,11 +9,10 @@ def read_data fn, scale
   data = []
   while line = f.gets
     line.strip!
-    v = SparseVector.new
     a = []
     a << 1.0
     tokenize(line).each { |i| a << i.to_f }
-    v.from_a(a)
+    v = SparseVector.from_a a
     data << v
   end
   if scale
@@ -22,7 +21,7 @@ def read_data fn, scale
       data.each { |i| i[k] /= max }
     }
   end
-  return data  
+  return data
 end
 
 def main
@@ -36,7 +35,7 @@ def main
   end
   data = read_data cfg[:input], cfg[:scale_features]
   zeros = [0.0]*data[0].size
-  t = ReadFile.new(cfg[:output]).readlines.map{ |i| i.to_f }
+  t = ReadFile.readlines(cfg[:output]).map{ |i| i.to_f }
   model = SparseVector.new zeros
   stop = 0
   prev_model = nil
@@ -48,12 +47,12 @@ def main
     data.each_with_index { |d,j|
       loss = model.dot(d) - t[j]
       overall_loss += loss**2
-      u += d * loss *(1.0/t.size)
+      u += d * (loss * (1.0/t.size))
     }
     STDERR.write "#{i} #{overall_loss/data.size}\n" if cfg[:show_loss]
     u *= cfg[:learning_rate]
     model -= u
-    if model.approx_eql? prev_model 
+    if model.approx_eql? prev_model
       stop += 1
     else
       stop = 0

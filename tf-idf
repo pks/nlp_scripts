@@ -15,7 +15,7 @@ def main
 
   stopwords = []
   if cfg[:filter_stopwords]
-    stopwords = ReadFile.new(cfg[:filter_stopwords]).readlines.map{ |i|
+    stopwords = ReadFile.readlines(cfg[:filter_stopwords]).map{ |i|
       i.split('|').first.strip
     }.reject{ |i| i=='' }
   end
@@ -23,17 +23,17 @@ def main
   docs = {}
   cfg[:documents].each { |i|
     if cfg[:one_item_per_line]
-      docs[i] = ReadFile.new(i).readlines_strip
+      docs[i] = ReadFile.readlines_strip i
     else
-     docs[i] = ReadFile.new(i).read.split(/\s/).map{ |i| i.strip }
+     docs[i] = ReadFile.read(i).split(/\s/).map{ |i| i.strip }
     end
   }
 
-  idf_values = idf docs
+  idf_values = TFIDF::idf docs
 
   docs.each_pair { |name, words|
-    just_tf = tf words, stopwords
-    just_tf = ntf(just_tf) if cfg[:ntf]
+    just_tf = TFIDF::tf words, stopwords
+    just_tf = TFIDF::ntf(just_tf) if cfg[:ntf]
     tf_idf = {}; tf_idf.default = 0.0
     if cfg[:idf]
       just_tf.each_pair { |word,f|

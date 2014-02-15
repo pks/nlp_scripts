@@ -8,7 +8,8 @@ def read_data fn
   data = {}
   ReadFile.new(fn).readlines_strip.map{ |i|
     a = i.split ' ', 2
-    data[a.first] = read_feature_string a.last
+    v = SparseVector.from_kv a.last
+    data[a.first] = v
   }
   return data
 end
@@ -22,7 +23,7 @@ def rand_means_init data, k
   prng = Random.new
   a = []
   0.upto(k-1) do
-    a << mean_sparse_vector(data.values.sample k, random:prng)
+    a << SparseVector.mean(data.values.sample k, random:prng)
   end
   return a
 end
@@ -51,7 +52,7 @@ end
 def update assignment, data
   new_centroids = []
   assignment.each_pair { |centroid_index,a|
-    new_centroids << mean_sparse_vector(assignment[centroid_index].map{ |i| data[i] })
+    new_centroids << SparseVector.mean(assignment[centroid_index].map{ |i| data[i] })
   }
   return new_centroids
 end

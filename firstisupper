@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-
-require 'nlp_ruby'
-
-
-while line = STDIN.gets
-  puts line.strip if downcase? line[0]
-end
-

@@ -13,10 +13,10 @@ cfg = Trollop::options do
 end
 fn = cfg[:foreign]
 fn_ext = fn.split('.').last
-f = ReadFile.new(fn).readlines
+f = ReadFile.readlines fn
 en = cfg[:english]
 en_ext = en.split('.').last
-e = ReadFile(en).readlines
+e = ReadFile.readlines en
 size = cfg[:size]
 nlines_f = `wc -l #{fn}`.split()[0].to_i
 nlines_e = `wc -l #{en}`.split()[0].to_i
@@ -32,15 +32,15 @@ cfg[:repeat].times {
   b = a.sample(size)
   ax = a.reject{|j| b.include? j}
   `mkdir split_#{i}`
-  new_f = WriteFile.new("split_#{i}/#{prefix}.train.#{i}.#{fn_ext}")
-  new_e = WriteFile.new("split_#{i}/#{prefix}.train.#{i}.#{en_ext}")
+  new_f = WriteFile.new "split_#{i}/#{prefix}.train.#{i}.#{fn_ext}"
+  new_e = WriteFile.new "split_#{i}/#{prefix}.train.#{i}.#{en_ext}"
   ax.each { |j|
     new_f.write f[j]
     new_e.write e[j]
   }
   new_f.close; new_e.close
-  new_f = WriteFile.new("split_#{i}/#{prefix}.test.#{i}.#{fn_ext}")
-  new_e = WriteFile.new("split_#{i}/#{prefix}.test.#{i}.#{en_ext}")
+  new_f = WriteFile.new "split_#{i}/#{prefix}.test.#{i}.#{fn_ext}"
+  new_e = WriteFile.new "split_#{i}/#{prefix}.test.#{i}.#{en_ext}"
   b.each { |j|
     new_f.write f[j]
     new_e.write e[j]

@@ -23,7 +23,7 @@ def main
   debug = cfg[:debug]
   n = cfg[:n]
   kbest_lists = read_kbest_lists cfg[:kbest_lists]
-  references = ReadFile.new(cfg[:references]).readlines_strip
+  references = ReadFile.readlines_strip cfg[:references]
   context = get_context kbest_lists, references, n
   kbest_lists.each_with_index { |kbest,j|
     scores = []
