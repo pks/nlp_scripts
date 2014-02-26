@@ -1,0 +1,17 @@
+PhraseModel_0 1.0
+PhraseModel_1 1.0
+PhraseModel_2 1.0
+PhraseModel_3 1.0
+PhraseModel_4 1.0
+PhraseModel_5 1.0
+PhraseModel_6 1.0
+PassThrough -1.0
+PassThrough_1 -1.0
+PassThrough_2 -1.0
+PassThrough_3 -1.0
+PassThrough_4 -1.0
+PassThrough_5 -1.0
+PassThrough_6 -1.0
+Glue 0.1
+LanguageModel 10.0
+LanguageModel_OOV -10

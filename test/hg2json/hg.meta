@@ -1,0 +1,7 @@
+input:
+ 'in dem verzweifelten versuch , an der macht festzuhalten , hat pervez musharraf den rahmen der pakistanischen verfassung verlassen und den notstand ausgerufen .'
+viterbi translation:
+ 'which labor market desperate transformed into attempting gathered by failed to show any the non - is making festzuhalten gathered by pervez musharraf meant to its borders with within than the non - have pakistan 's intelligence relied constitutional for security as a its borders with declared a state of emergency - range missiles .'
+# nodes = 220
+# edges = 16640
+viterbi score = 228.95

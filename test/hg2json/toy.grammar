@@ -1,0 +1,12 @@
+[S] ||| [NP,1] [VP,2] ||| [1] [2] ||| logp=0
+[NP] ||| ich ||| i ||| logp=-0.5 use_i=1.0
+[NP] ||| ein [NN,1] ||| a [1] ||| logp=0 use_a=1.0
+[NN] ||| [JJ,1] haus ||| [1] house ||| logp=0 use_house=1
+[NN] ||| [JJ,1] haus ||| [1] shell ||| logp=0 use_shell=1
+[JJ] ||| kleines ||| small ||| logp=0 use_small=1.0
+[JJ] ||| kleines ||| little ||| logp=0 use_little=1.0
+[JJ] ||| grosses ||| big ||| logp=0
+[JJ] ||| grosses ||| large ||| logp=0
+[VP] ||| [V,1] [NP,2] ||| [1] [2] ||| logp=0
+[V] ||| sah ||| saw ||| logp=-0.25 use_saw=1.0
+[V] ||| fand ||| found ||| logp=0
