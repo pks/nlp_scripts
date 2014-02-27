@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require 'nlp_ruby'
+require 'trollop'
+
+
+def main
+  cfg = Trollop::options do
+    opt :f, "f files", :type => :string, :required => true
+    opt :e, "e files", :type => :string, :required => true
+  end
+  
+  f_files = cfg[:f].split
+  e_files = cfg[:e].split
+  
+  h = {}
+  f_files.each_with_index { |fn,i|
+    fa = ReadFile.readlines_strip fn 
+    ea = ReadFile.readlines_strip e_files[i]
+    fa.each_with_index { |fw,j|
+      if h.has_key? fw
+        h[fw] << ea[j]
+      else
+        h[fw] = [ea[j]]
+      end
+    }
+  }
+  
+  h.each_pair { |f,ea|
+    puts "#{f}\t#{ea.first}" 
+  } 
+end
+
+
+main
+
