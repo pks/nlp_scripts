@@ -44,13 +44,13 @@ def main
     i += 1
     u = SparseVector.new zeros
     overall_loss = 0.0
-    data.each_with_index { |d,j|
-      loss = model.dot(d) - t[j]
+    data.each_with_index { |x,j|
+      loss = model.dot(x) - t[j]
       overall_loss += loss**2
-      u += d * (loss * (1.0/t.size))
+      u += x * loss
     }
     STDERR.write "#{i} #{overall_loss/data.size}\n" if cfg[:show_loss]
-    u *= cfg[:learning_rate]
+    u *= cfg[:learning_rate]*(1.0/t.size)
     model -= u
     if model.approx_eql? prev_model
       stop += 1
