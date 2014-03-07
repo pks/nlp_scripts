@@ -26,6 +26,8 @@ cached.each { |v|
   var += (avg - v)**2
 }
 
+var /= i.to_f
+
 if cfg[:round] >= 0
   puts var.round cfg[:round]
 else

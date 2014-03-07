@@ -25,7 +25,7 @@ cached.each { |v|
   var += (avg - v)**2
 }
 
-stddev = Math.sqrt(var)
+stddev = Math.sqrt(var/i.to_f)
 
 if cfg[:round] >= 0
   puts stddev.round cfg[:round]
