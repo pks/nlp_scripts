@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'nlp_ruby'
+
+
+while line = STDIN.gets
+  puts tokenize(line.strip).size
+end
+
