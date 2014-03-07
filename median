@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'nlp_ruby'
+
+
+a = []
+while line = STDIN.gets
+  a << line.to_f
+end
+
+a.sort!
+
+puts a[a.size/2]
+
