@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+h = {}
+while line = STDIN.gets
+  name, value = line.strip.split
+  h[name] = value.to_f
+end
+
+h.sort_by { |name, value| -value }.each { |name, value| puts "#{name}\t#{value}" }
+
