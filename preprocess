@@ -1,5 +1,5 @@
 #!/bin/bash
 
 LANG=$1
-/toolbox/scripts/no_non_printables | /toolbox/scripts/htmlentities 2>htmlentities.$LANG.err | /toolbox/scripts/normalize_punctuation 2>normalize-punctuation.$LANG.err | /toolbox/moses/scripts/tokenizer/tokenizer.no-escape.perl -a -b -threads 1 -l $LANG 2>tokenizer.$LANG.err | /toolbox/moses/scripts/tokenizer/lowercase.perl 2>lowercase.$LANG.err
+/toolbox/scripts/no_non_printables | sed "s|[-,\.]\{4,\}|...|" | /toolbox/scripts/htmlentities 2>htmlentities.$LANG.err | /toolbox/scripts/normalize_punctuation 2>normalize-punctuation.$LANG.err | /toolbox/moses/scripts/tokenizer/tokenizer.no-escape.perl -a -b -threads 1 -l $LANG 2>tokenizer.$LANG.err | /toolbox/moses/scripts/tokenizer/lowercase.perl 2>lowercase.$LANG.err
 
