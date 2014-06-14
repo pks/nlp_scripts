@@ -1,5 +1,9 @@
 #!/bin/bash
 
+pushd `dirname $0` > /dev/null
+P=`pwd -P`
+popd > /dev/null
+
 LANG=$1
-/toolbox/scripts/no_non_printables | sed "s|[-,\.]\{4,\}|...|g" | /toolbox/scripts/htmlentities 2>htmlentities.$LANG.err | /toolbox/scripts/normalize_punctuation 2>normalize-punctuation.$LANG.err | /toolbox/moses/scripts/tokenizer/tokenizer.no-escape.perl -a -b -threads 1 -l $LANG 2>tokenizer.$LANG.err | /toolbox/moses/scripts/tokenizer/lowercase.perl 2>lowercase.$LANG.err
+$P/no_non_printables | sed "s|[-,\.]\{4,\}|...|g" | $P/htmlentities 2>htmlentities.$LANG.err | $P/normalize_punctuation 2>normalize-punctuation.$LANG.err | $P/tokenizer.no-escape.perl -a -b -threads 1 -l $LANG 2>tokenizer.$LANG.err | $P/lowercase.perl 2>lowercase.$LANG.err
 
