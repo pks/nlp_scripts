@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'nlp_ruby'
+require 'zipf'
 require 'trollop'
 
 cfg = Trollop::options do
