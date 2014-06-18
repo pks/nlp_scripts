@@ -6,7 +6,7 @@ require 'trollop'
 
 def main
   cfg = Trollop::options do
-    opt :documents, "input files (documents)", :type => :strings, :required => true
+    opt :documents, "input files (documents)", :type => :string, :required => true
     opt :filter_stopwords, "filter stopwords (give file)", :type => :string, :default => nil
     opt :one_item_per_line, "one item per line (allow multi-word items)", :type => :bool, :default => false
     opt :ntf, "length-normalize tf values", :type => :bool
