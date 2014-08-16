@@ -1,1 +1,12 @@
-memusg_git/memusg
+#!/bin/bash
+
+
+"$@" &
+pid=$! peak=0
+while true; do
+  sleep 1
+  sample="$(ps -o rss= $pid 2> /dev/null)" || break
+  let peak='sample > peak ? sample : peak'
+done
+echo "$(( ${peak%% *} / 1024)) m"
+
