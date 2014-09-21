@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+require 'zipf'
+
+opts = Trollop::options do
+  banner "sample --index <n> [--shuffle] [--file <line separated data>]"
+  opt :file, "Input file.", :type => :string, :default => '-'
+  opt :index, "Index file.", :type => :string, :required => true
+end
+
+input = ReadFile.readlines_strip opts[:file]
+index = ReadFile.readlines_strip(opts[:index]).map{ |i| i.to_i }
+
+index.each { |i|
+  puts input[i]
+}
+
