@@ -1,26 +1,35 @@
 #!/usr/bin/env ruby
 
 require 'trollop'
-
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
-
+require 'zipf'
 
 cfg = Trollop::options do
   opt :grammar, "(Absolute) path of folder containing grammars.", :type => :string, :short => '-g', :required => true
   opt :loo, "leave one out", :type => :bool, :default => false
   opt :start_id, "start with this id", :type => :int, :default => 0, :short => '-i'
   opt :nogz, "grammar files not gzipped", :type => :bool, :default => false
+  opt :index, "number according to index", :type => :string, :default => nil
+end
+
+index = []
+if cfg[:index]
+  index = ReadFile.readlines_strip(cfg[:index]).map{ |i| i.to_i }
 end
 
 i = cfg[:start_id]
+j = 0
 while line = STDIN.gets
   ext = '.gz'
   ext = '' if cfg[:nogz]
   s = "<seg"
   if cfg[:loo] then s += " exclude=\"#{i}\"" end
   if cfg[:grammar] then s += " grammar=\"#{cfg[:grammar]}/grammar.#{i}#{ext}\"" end
-  puts s + " id=\"#{i}\"> #{line.strip} </seg>"
-  i+=1
+  if index.size > 0
+    puts s + " id=\"#{index[j]}\"> #{line.strip} </seg>"
+  else
+    puts s + " id=\"#{i}\"> #{line.strip} </seg>"
+  end
+  i += 1
+  j += 1
 end
 
