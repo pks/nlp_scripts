@@ -5,14 +5,55 @@ require 'trollop'
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-
 opts = Trollop::options do
-  banner "sample --size <n> < <line separated data>"
-  opt :size, "Sample n% (percentage).", :type => :int
+  banner "sample --size <n> [--shuffle] --file <line separated data>"
+  opt :size, "Sample P % or # lines from file or N.", :type => :float
+  opt :shuffle, "Sample is shuffled.", :type => :bool
+  opt :file, "Input file.", :type => :string, :default => '-'
+  opt :output_index, "Output index number.", :type => :bool
+  opt :N, "Sample --size from N items.", :type => :int, :default => -1
+  opt :absolute, "Sample absolute number of items.", :type => :bool
 end
 
-prng = Random.new(Random.new_seed)
-while line = STDIN.gets
-  STDOUT.write line if prng.rand(1..opts[:size])==0
+input = []
+index = []
+i = 0
+if opts[:N] == -1
+  if opts[:file] == '-'
+    file = STDIN
+  else
+    file = File.new opts[:file], 'r'
+  end
+  while line = file.gets
+    input << line
+    index << i
+    i += 1
+  end
+else
+  index = (0..opts[:N]-1).to_a
+end
+
+sample = []
+if !opts[:absolute]
+  sample = index.sample(index.size*(opts[:size]/100.0))
+  sample = index.sample(index.size*(opts[:size]/100.0))
+else
+  sample = index.sample(opts[:size])
+end
+
+if !opts[:shuffle]
+  sample.sort!
+end
+
+while idx = sample.shift
+  if opts[:N] != -1
+    puts idx
+  else
+    if opts[:output_index]
+      puts "#{idx} #{input[idx]}"
+    else
+      puts "#{input[idx]}"
+    end
+  end
 end
 
