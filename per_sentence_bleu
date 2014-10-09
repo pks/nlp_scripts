@@ -3,7 +3,6 @@
 require 'zipf'
 require 'trollop'
 
-
 def main
   cfg = Trollop::options do
     opt :input, "input", :type => :string, :default => '-'
@@ -25,7 +24,6 @@ def main
   end
   input.close
 end
-
 
 main
 

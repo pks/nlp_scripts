@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-
 while line = STDIN.gets
   encoding_options = {
     :invalid           => :replace,

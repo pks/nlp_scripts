@@ -2,7 +2,6 @@
 
 require 'trollop'
 
-
 cfg = Trollop::options do
   banner "stddev [-r <d>] < <one number per line>"
   opt :round, "Number of digits after decimal point.", :type => :int, :default => -1

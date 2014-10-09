@@ -75,7 +75,6 @@ def main():
 
   print hg2json(hg, decoder.weights)
 
-
 if __name__=="__main__":
   main()
 

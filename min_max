@@ -3,7 +3,6 @@
 require 'zipf'
 require 'trollop'
 
-
 cfg = Trollop::options do
   opt :min, "minimum #tokens", :type => :int, :default => 1
   opt :max, "maximum #tokens", :type => :int, :default => 80, :short => '-n'

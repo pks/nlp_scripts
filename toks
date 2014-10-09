@@ -3,7 +3,6 @@
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-
 while line = STDIN.gets
   line.strip.split(/\s/).each { |i| puts i }
 end

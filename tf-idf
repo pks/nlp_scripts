@@ -3,7 +3,6 @@
 require 'zipf'
 require 'trollop'
 
-
 def main
   cfg = Trollop::options do
     opt :documents, "input files (documents)", :type => :string, :required => true
@@ -47,7 +46,6 @@ def main
 
   docs.each { |i| puts i.to_s }
 end
-
 
 main
 

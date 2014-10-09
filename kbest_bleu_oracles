@@ -3,7 +3,6 @@
 require 'zipf'
 require 'trollop'
 
-
 def get_context kbest_lists, references, n
   a = []
   kbest_lists.each_index { |i|
@@ -47,7 +46,6 @@ def main
     STDERR.write "\n" if debug
   }
 end
-
 
 main
 

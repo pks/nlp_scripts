@@ -3,7 +3,6 @@
 require 'zipf'
 require 'trollop'
 
-
 cfg = Trollop::options do
   opt :foreign, "foreign file", :type => :string, :required => true
   opt :english, "english file", :type => :string, :required => true

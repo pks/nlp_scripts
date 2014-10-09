@@ -2,7 +2,6 @@
 
 require 'zipf'
 
-
 a = []
 while line = STDIN.gets
   a << line.to_f

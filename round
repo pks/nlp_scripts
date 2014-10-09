@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-
 r = ARGV[0].to_i
 while line = STDIN.gets
   puts line.to_f.round r

@@ -2,7 +2,6 @@
 
 require 'zipf'
 
-
 prev_idx = nil
 while line = STDIN.gets
   line.strip!

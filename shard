@@ -2,7 +2,6 @@
 
 require 'trollop'
 
-
 def make_shards(input, refs, alignments, output_prefix, num_shards=2, rand=false)
   lc = `wc -l #{input}`.split.first.to_i
   input_ext = input.split('.').last

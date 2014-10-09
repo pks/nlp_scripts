@@ -2,7 +2,6 @@
 
 require 'zipf'
 
-
 def usage
   STDERR.write "merge_files <file>+\n"
   exit 1

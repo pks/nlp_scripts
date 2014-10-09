@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-
 max = -1.0/0
 while line = STDIN.gets
   v = line.to_f

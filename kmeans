@@ -3,7 +3,6 @@
 require 'zipf'
 require 'trollop'
 
-
 def read_data fn
   data = {}
   ReadFile.new(fn).readlines_strip.map{ |i|
@@ -113,7 +112,6 @@ def main
     centroids = update assignment, data
   end
 end
-
 
 main
 

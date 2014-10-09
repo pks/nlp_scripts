@@ -4,7 +4,6 @@ require 'zipf'
 require 'trollop'
 require 'zlib'
 
-
 cfg = Trollop::options do
   opt :weights_files, "a number of weights files: name value", :required => true
   opt :filter, "Filter if key does not appear in every file.", :type => :bool, :default => false

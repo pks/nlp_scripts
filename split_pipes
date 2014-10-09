@@ -5,7 +5,6 @@ require 'trollop'
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-
 cfg = Trollop::options do
   banner "splitpipes -f <n> < <input>"
   opt :field, "field", :type => :int

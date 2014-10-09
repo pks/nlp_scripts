@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-
 sum = 0.0
 while line = STDIN.gets
   sum += line.to_f

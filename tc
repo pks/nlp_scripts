@@ -2,7 +2,6 @@
 
 require 'zipf'
 
-
 while line = STDIN.gets
   puts tokenize(line.strip).size
 end

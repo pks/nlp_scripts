@@ -5,7 +5,6 @@
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-
 in_p = false
 in_dateline = false
 collect = []

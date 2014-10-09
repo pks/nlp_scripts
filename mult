@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-
 factor = ARGV[0].to_f
 while line = STDIN.gets
   puts line.to_f * factor

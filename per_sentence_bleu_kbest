@@ -3,7 +3,6 @@
 require 'zipf'
 require 'trollop'
 
-
 def main
   cfg = Trollop::options do
     opt :kbests, "kbests", :type => :string, :default => '-'
@@ -28,7 +27,6 @@ def main
     i += 1
   }
 end
-
 
 main
 

@@ -2,7 +2,6 @@
 
 require 'zipf'
 
-
 files = []
 (0..1).each { |i| files << ReadFile.new(ARGV[i]) }
 (2..3).each { |i| files << WriteFile.new(ARGV[i]) }

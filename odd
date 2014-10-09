@@ -3,7 +3,6 @@
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-
 i = 1
 while line = STDIN.gets
   puts line if i%2!=0

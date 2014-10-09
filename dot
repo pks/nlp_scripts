@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+a = SparseVector.from_file 'w', ' '
+b = SparseVector.from_file 'f', ' '
+puts a.to_s
+puts a.dot b
+

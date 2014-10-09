@@ -4,7 +4,6 @@ require 'zipf'
 require 'matrix'
 require 'trollop'
 
-
 def read_data fn
   f = ReadFile.new fn
   data = []
@@ -67,7 +66,6 @@ def main
   STDERR.write "ran for #{i} iterations\n"
   puts model.to_s
 end
-
 
 main
 

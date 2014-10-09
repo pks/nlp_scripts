@@ -4,7 +4,6 @@ require 'zipf'
 require 'trollop'
 require 'tempfile'
 
-
 def main
   cfg = Trollop::options do
     opt :input, "input", :type => :string, :default => '-'
@@ -29,7 +28,6 @@ def main
   end
   input.close
 end
-
 
 main
 

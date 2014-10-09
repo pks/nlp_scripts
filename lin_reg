@@ -3,7 +3,6 @@
 require 'zipf'
 require 'trollop'
 
-
 def read_data fn, scale
   f = ReadFile.new fn
   data = []
@@ -66,7 +65,6 @@ def main
   STDERR.write "ran for #{i} iterations\n R^2=#{1-(rss/tss)}\n"
   puts model.to_s
 end
-
 
 main
 

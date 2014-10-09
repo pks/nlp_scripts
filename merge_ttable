@@ -3,7 +3,6 @@
 require 'zipf'
 require 'trollop'
 
-
 def main
   cfg = Trollop::options do
     opt :f, "f files", :type => :string, :required => true
@@ -30,7 +29,6 @@ def main
     puts "#{f}\t#{ea.first}" 
   } 
 end
-
 
 main
 

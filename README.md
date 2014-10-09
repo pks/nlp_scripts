@@ -1,13 +1,11 @@
-scripts
-=======
+a number of NLP related scripts. Some scripts require my zipf gem, see [1]
 
-A number of NLP related scripts.
-Some scripts require my zipf gem,
-see https://github.com/pks/zipf
+\*.perl taken from the moses [2] toolkit
 
-compound-splitter.perl and tokenizer.no-escape.perl
-taken from the moses [1] toolkit.
+mem\_usage taken from [3]
 
 
-[1] https://github.com/moses-smt/mosesdecoder
+[1] https://github.com/pks/zipf
+[2] https://github.com/moses-smt/mosesdecoder
+[3] https://gist.github.com/netj/526585
 

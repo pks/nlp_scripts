@@ -2,7 +2,6 @@
 
 require 'zipf'
 
-
 while line = STDIN.gets
   line.strip!
   if line && line!='' && line[0].downcase?

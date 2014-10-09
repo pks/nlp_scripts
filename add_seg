@@ -24,8 +24,8 @@ while line = STDIN.gets
   s = "<seg"
   if cfg[:loo] then s += " exclude=\"#{i}\"" end
   if index.size > 0
-    puts s + " id=\"#{index[j]}\"> #{line.strip} </seg>"
     if cfg[:grammar] then s += " grammar=\"#{cfg[:grammar]}/grammar.#{index[j]}#{ext}\"" end
+    puts s + " id=\"#{index[j]}\"> #{line.strip} </seg>"
   else
     if cfg[:grammar] then s += " grammar=\"#{cfg[:grammar]}/grammar.#{i}#{ext}\"" end
     puts s + " id=\"#{i}\"> #{line.strip} </seg>"
