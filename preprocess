@@ -5,5 +5,5 @@ P=`pwd -P`
 popd > /dev/null
 
 LANG=$1
-$P/no_non_printables | sed "s|[-,\.]\{4,\}|...|g" | $P/htmlentities 2>htmlentities.$LANG.err | $P/normalize_punctuation 2>normalize-punctuation.$LANG.err | $P/tokenizer.no-escape.perl -a -b -threads 1 -l $LANG 2>tokenizer.$LANG.err | $P/lowercase.perl 2>lowercase.$LANG.err
+$P/no_non_printables | sed "s|[-,\.]\{4,\}|...|g" | $P/htmlentities 2>htmlentities.$LANG.err | $P/normalize_punctuation 2>normalize-punctuation.$LANG.err | $P/tokenizer-no-escape.perl -a -b -threads 1 -l $LANG 2>tokenizer.$LANG.err | $P/lowercase.perl 2>lowercase.$LANG.err
 
