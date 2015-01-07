@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+accept = {}
+
+f = ReadFile.new ARGV[0]
+f.readlines_strip.each { |line|
+  accept[line.strip.to_i] = true
+}
+
+i = 0
+while line = STDIN.gets
+  if accept[i]
+    STDOUT.write line
+  end
+  i += 1
+end
+
