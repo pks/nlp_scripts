@@ -1,6 +1,13 @@
 #!/usr/bin/env ruby
 
+require 'trollop'
 require 'zipf'
+
+opts = Trollop::options do
+  banner "select_from [--invert] -i <file> < <line separated data>"
+  opt :index,  "Line numbers to output.", :required => true
+  opt :invert, "Invert selection.", :type => :bool, :short => '-j', :default => false
+end
 
 accept = {}
 
@@ -11,7 +18,9 @@ f.readlines_strip.each { |line|
 
 i = 0
 while line = STDIN.gets
-  if accept[i]
+  if accept[i] && !opts[:invert]
+    STDOUT.write line
+  elsif !accept[i] && opts[:invert]
     STDOUT.write line
   end
   i += 1
