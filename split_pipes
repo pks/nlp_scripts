@@ -41,9 +41,11 @@ while line = STDIN.gets
     end
     j += 1
   }
+  if range
+    puts "#{a.join " ||| "}\n"
+  end
+  a.clear
 end
 
-if cfg[:to]
-  puts a.join " ||| "
-end
+
 
