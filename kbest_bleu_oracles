@@ -31,7 +31,7 @@ def main
     kbest.each_index { |i|
       context_cp = context.dup
       context_cp[j] = BLEU::get_counts kbest[i].s, references[j], n, cfg[:weight]
-      score = BLEU::hbleu(context_cp, n, debug)
+      score = BLEU::hbleu_(context_cp, n, debug)
       scores << score
       if score > max_score
         max_score = score
