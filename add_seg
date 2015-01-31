@@ -3,8 +3,8 @@
 require 'trollop'
 require 'zipf'
 
-cfg = Trollop::options do
-  opt :grammar, "(Absolute) path of folder containing grammars.", :type => :string, :short => '-g', :required => true
+o = Trollop::options do
+  opt :grammar, "(Absolute) path of folder containing grammars.", :type => :string, :short => '-g', :default => nil
   opt :loo, "leave one out", :type => :bool, :default => false
   opt :start_id, "start with this id", :type => :int, :default => 0, :short => '-i'
   opt :nogz, "grammar files not gzipped", :type => :bool, :default => false
@@ -12,22 +12,22 @@ cfg = Trollop::options do
 end
 
 index = []
-if cfg[:index]
-  index = ReadFile.readlines_strip(cfg[:index]).map{ |i| i.to_i }
+if o[:index]
+  index = ReadFile.readlines_strip(o[:index]).map{ |i| i.to_i }
 end
 
-i = cfg[:start_id]
+i = o[:start_id]
 j = 0
 while line = STDIN.gets
   ext = '.gz'
-  ext = '' if cfg[:nogz]
+  ext = '' if o[:nogz]
   s = "<seg"
-  if cfg[:loo] then s += " exclude=\"#{i}\"" end
+  if o[:loo] then s += " exclude=\"#{i}\"" end
   if index.size > 0
-    if cfg[:grammar] then s += " grammar=\"#{cfg[:grammar]}/grammar.#{index[j]}#{ext}\"" end
+    if o[:grammar] then s += " grammar=\"#{o[:grammar]}/grammar.#{index[j]}#{ext}\"" end
     puts s + " id=\"#{index[j]}\"> #{line.strip} </seg>"
   else
-    if cfg[:grammar] then s += " grammar=\"#{cfg[:grammar]}/grammar.#{i}#{ext}\"" end
+    if o[:grammar] then s += " grammar=\"#{o[:grammar]}/grammar.#{i}#{ext}\"" end
     puts s + " id=\"#{i}\"> #{line.strip} </seg>"
   end
   i += 1
