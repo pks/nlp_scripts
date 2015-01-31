@@ -1,0 +1,75 @@
+#!/usr/bin/env ruby
+
+#################################################
+# reads space delimted pairs of scores as input,
+# outputs Kendall's τ
+#################################################
+
+def kendall_with_ties l
+  concordant = 0
+  disconcordant = 0
+  tie_a = 0
+  tie_b = 0
+  l.each_with_index { |k,i|
+    l[i+1,l.size].each_with_index { |m,j|
+      if (k.first < m.first && k[1] < m[1]) ||
+         (k.first > m.first && k[1] > m[1]) 
+        concordant += 1
+      elsif (k.first == m.first && k[1] != m[1])
+        tie_a += 1
+      elsif (k.first != m.first && k[1] == m[1])
+        tie_b += 1
+      else
+        disconcordant += 1
+      end
+    }
+  }
+ 
+  return (concordant-disconcordant)/(Math.sqrt((concordant+disconcordant+tie_a)*(concordant+disconcordant+tie_b)))
+end
+
+def kendall l
+  concordant = 0
+  disconcordant = 0
+  l.each_with_index { |k,i|
+    l[i+1,l.size].each_with_index { |m,j|
+      if (k.first <= m.first && k[1] <= m[1]) ||
+         (k.first >= m.first && k[1] >= m[1]) 
+        concordant += 1
+      else
+        disconcordant += 1
+      end
+    }
+  }
+
+ return (concordant-disconcordant)/(0.5 * l.size * (l.size-1))
+end
+
+def has_ties? l
+  if l.map{ |p| p[1] }.uniq.size != l.size ||
+     l.map{ |p| p[2] }.uniq.size != l.size
+    return true
+  end
+
+  return false
+end
+
+def main
+  l = []
+  while line = STDIN.gets
+    a,b = line.split
+    l << [a.to_f, b.to_f]
+  end
+  
+  v = -1
+  if has_ties? l
+    v = kendall_with_ties l
+  else
+    v = kendall l
+  end
+
+  puts v
+end
+
+main
+
