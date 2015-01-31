@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+n = 0
+feature_dict = {}
+l_i = 1
+while line = STDIN.gets
+  STDERR.write "#{l_i}\n"
+  line.split.each { |i|
+    f, v = i.split('=', 2)
+    if !feature_dict.has_key? f
+      feature_dict[f] = n
+      n += 1
+    end
+  }
+  l_i += 1
+end
+
+f = File.new "fd.dump", 'w'
+f.write Marshal.dump feature_dict
+f.close
+
+STDERR.write "size = #{feature_dict.size}\n"
+

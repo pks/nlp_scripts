@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+fd = Marshal.load ReadFile.read ARGV[0]
+d = fd.size
+
+train = []
+l_i = 1
+while line = STDIN.gets
+  puts l_i if l_i%1000==0
+  s = []
+  line.split.each { |i|
+    k,w = i.split '=', 2
+    s << [fd[k]+1, w.to_f]
+  }
+  s.sort_by! { |i| i.first }
+  puts "+1 #{s.map{|i| "#{i.first}:#{i[1]}" }.join(' ')}"
+  l_i+= 1
+end
+
