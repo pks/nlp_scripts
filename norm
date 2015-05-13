@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+sum=$(cat $1 | sum)
+
+for i in `cat $1`; do
+  echo "$i" | div $sum
+done
+
