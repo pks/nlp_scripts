@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
 
+not_quiet = ARGV[1]
 n = 0
 feature_dict = {}
 l_i = 1
 while line = STDIN.gets
-  STDERR.write "#{l_i}\n"
+  STDERR.write "#{l_i}\n" if l_i%1000==0&&not_quiet
   line.split.each { |i|
     f, v = i.split('=', 2)
     if !feature_dict.has_key? f
@@ -15,7 +16,7 @@ while line = STDIN.gets
   l_i += 1
 end
 
-f = File.new "fd.dump", 'w'
+f = File.new ARGV[0], 'w'
 f.write Marshal.dump feature_dict
 f.close
 

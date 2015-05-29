@@ -5,10 +5,11 @@ require 'zipf'
 fd = Marshal.load ReadFile.read ARGV[0]
 d = fd.size
 
+not_quiet = ARGV[1]
 train = []
 l_i = 1
 while line = STDIN.gets
-  puts l_i if l_i%1000==0
+  STDERR.write "#{l_i}\n" if l_i%1000==0&&not_quiet
   s = []
   line.split.each { |i|
     k,w = i.split '=', 2
