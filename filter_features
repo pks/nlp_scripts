@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+dense_features = ReadFile.readlines_strip "#{File.dirname(__FILE__)}/dense_features.txt"
+
+sep = " "
+
+while line = STDIN.gets
+  a = line.strip.split
+  a.reject! { |i|
+    !dense_features.include?(i.split('=').first)
+  }
+  puts a.join sep
+end
+

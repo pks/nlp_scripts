@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+dir = ARGV[0]
+i = 0
+while line = STDIN.gets
+  src, tgt = line.split " ||| "
+  f = WriteFile.new "#{dir}/#{i}.src" 
+  f.write line
+  f.close
+  i += 1
+end
+
