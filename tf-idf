@@ -20,7 +20,13 @@ def main
   end
 
   docs = {}
-  cfg[:documents].each { |i|
+  a = []
+  if cfg[:documents].strip[0] == "*"
+    ad = Dir.glob(cfg[:documents])
+  else
+    ad = cfg[:documents].split
+  end
+  ad.each { |i|
     if cfg[:one_item_per_line]
       docs[i] = ReadFile.readlines_strip i
     else
