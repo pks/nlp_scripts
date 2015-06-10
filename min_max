@@ -3,7 +3,7 @@
 require 'zipf'
 require 'trollop'
 
-cfg = Trollop::options do
+conf = Trollop::options do
   opt :min, "minimum #tokens", :type => :int, :default => 1
   opt :max, "maximum #tokens", :type => :int, :default => 80, :short => '-n'
   opt :in_f, "input 'French' file", :type => :string, :required => true
@@ -15,11 +15,11 @@ end
 
 
 files = {}
-files[:f_file] = ReadFile.new cfg[:in_f]
-files[:e_file] = ReadFile.new cfg[:in_e]
-files[:f_out_file] = WriteFile.new cfg[:out_f]
-files[:e_out_file] = WriteFile.new cfg[:out_e]
-files[:id_out_file] = WriteFile.new cfg[:out_id]
+files[:f_file] = ReadFile.new conf[:in_f]
+files[:e_file] = ReadFile.new conf[:in_e]
+files[:f_out_file] = WriteFile.new conf[:out_f]
+files[:e_out_file] = WriteFile.new conf[:out_e]
+files[:id_out_file] = WriteFile.new conf[:out_id]
 i = 0
 while f_line = files[:f_file].gets
   e_line = files[:e_file].gets
@@ -27,8 +27,8 @@ while f_line = files[:f_file].gets
   e_line.strip!
   a = f_line.split
   b = e_line.split
-  if a.size >= cfg[:min] and a.size <= cfg[:max] and \
-      b.size >= cfg[:min] and b.size <= cfg[:max]
+  if a.size >= conf[:min] and a.size <= conf[:max] and \
+      b.size >= conf[:min] and b.size <= conf[:max]
     files[:f_out_file].write "#{f_line}\n"
     files[:e_out_file].write "#{e_line}\n"
     files[:id_out_file].write "#{i}\n"

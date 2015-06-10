@@ -4,12 +4,12 @@ require 'zipf'
 require 'trollop'
 
 def main
-  cfg = Trollop::options do
+  conf = Trollop::options do
     opt :kbests, "kbests", :type => :string, :default => '-'
     opt :references, "references", :type => :string, :required => true
   end
-  refs = ReadFile.new cfg[:references]
-  kbest_lists = read_kbest_lists cfg[:kbests]
+  refs = ReadFile.new conf[:references]
+  kbest_lists = read_kbest_lists conf[:kbests]
   i = 0
   kbest_lists.each { |list|
     scores = []

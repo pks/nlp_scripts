@@ -4,23 +4,23 @@ require 'zipf'
 require 'trollop'
 
 def main
-  cfg = Trollop::options do
+  conf = Trollop::options do
     opt :input, "input", :type => :string, :default => '-'
     opt :references, "references", :type => :string, :required => true
     opt :len_hack, "hack of Nakov et al", :type => :int, :default => 0
     opt :n, "N", :default => 4
   end
 
-  refs = ReadFile.readlines_strip cfg[:references]
+  refs = ReadFile.readlines_strip conf[:references]
   i = -1
-  input = ReadFile.new cfg[:input]
+  input = ReadFile.new conf[:input]
   while line = input.gets
     i += 1
     if line.strip == ''
       puts 0.0
       next
     end
-    puts BLEU::per_sentence_bleu line.strip, refs[i], cfg[:n], cfg[:len_hack]
+    puts BLEU::per_sentence_bleu line.strip, refs[i], conf[:n], conf[:len_hack]
   end
   input.close
 end

@@ -3,20 +3,20 @@
 require 'zipf'
 require 'trollop'
 
-cfg = Trollop::options do
+conf = Trollop::options do
   opt :foreign, "foreign file", :type => :string, :required => true
   opt :english, "english file", :type => :string, :required => true
   opt :size, "one size", :type => :int, :required => true
   opt :repeat, "number of repetitions", :type => :int, :default => 1
   opt :prefix, "prefix for output files", :type => :string
 end
-fn = cfg[:foreign]
+fn = conf[:foreign]
 fn_ext = fn.split('.').last
 f = ReadFile.readlines fn
-en = cfg[:english]
+en = conf[:english]
 en_ext = en.split('.').last
 e = ReadFile.readlines en
-size = cfg[:size]
+size = conf[:size]
 nlines_f = `wc -l #{fn}`.split()[0].to_i
 nlines_e = `wc -l #{en}`.split()[0].to_i
 if nlines_f != nlines_e
@@ -24,10 +24,10 @@ if nlines_f != nlines_e
   exit 1
 end
 
-prefix = cfg[:prefix]
+prefix = conf[:prefix]
 a = (0..nlines_e-1).to_a
 i = 0
-cfg[:repeat].times {
+conf[:repeat].times {
   b = a.sample(size)
   ax = a.reject{|j| b.include? j}
   `mkdir split_#{i}`

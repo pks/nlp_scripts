@@ -5,14 +5,14 @@ require 'trollop'
 require 'tempfile'
 
 def main
-  cfg = Trollop::options do
+  conf = Trollop::options do
     opt :input, "input", :type => :string, :default => '-'
     opt :references, "references", :type => :string, :required => true
     opt :mteval_bin, "cdec's mteval/fast_score", :type => :string, :default => '`/toolbox/cdec-dtrain/mteval/fast_score'
   end
 
-  refs = ReadFile.readlines_strip cfg[:references]
-  input = ReadFile.new cfg[:input]
+  refs = ReadFile.readlines_strip conf[:references]
+  input = ReadFile.new conf[:input]
   i = -1
   while line = input.gets
     line.strip!

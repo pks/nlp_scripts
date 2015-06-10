@@ -4,13 +4,13 @@ require 'zipf'
 require 'trollop'
 
 def main
-  cfg = Trollop::options do
+  conf = Trollop::options do
     opt :f, "f files", :type => :string, :required => true
     opt :e, "e files", :type => :string, :required => true
   end
   
-  f_files = cfg[:f].split
-  e_files = cfg[:e].split
+  f_files = conf[:f].split
+  e_files = conf[:e].split
   
   h = {}
   f_files.each_with_index { |fn,i|

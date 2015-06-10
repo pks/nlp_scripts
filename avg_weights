@@ -4,7 +4,7 @@ require 'zipf'
 require 'trollop'
 require 'zlib'
 
-cfg = Trollop::options do
+conf = Trollop::options do
   opt :weights_files, "a number of weights files: name value", :required => true
   opt :filter, "Filter if key does not appear in every file.", :type => :bool, :default => false
 end
@@ -27,7 +27,7 @@ ARGV.each { |fn|
 n = ARGV.size.to_f
 
 h.each_pair { |k,w|
-  next if cfg[:filter] and w.size < n
+  next if conf[:filter] and w.size < n
   puts "#{k} #{w.inject(:+)/n}"
 }
 

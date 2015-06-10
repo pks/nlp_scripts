@@ -2,7 +2,7 @@
 
 require 'trollop'
 
-cfg = Trollop::options do
+conf = Trollop::options do
   banner "avg < <one number per line>"
   opt :round, "Number of digits after decimal point.", :type => :int, :default => -1
 end
@@ -16,8 +16,8 @@ end
 
 avg = sum/i.to_f
 
-if cfg[:round] >= 0
-  puts avg.round cfg[:round]
+if conf[:round] >= 0
+  puts avg.round conf[:round]
 else
   puts avg
 end
