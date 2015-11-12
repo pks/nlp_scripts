@@ -1,0 +1,4 @@
+#!/bin/zsh -x
+
+sed "s|[ \t]\+\xc2\xad[ \t]\+||g"
+
