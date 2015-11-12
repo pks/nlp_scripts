@@ -12,17 +12,17 @@ def get_context kbest_lists, references, n
 end
 
 def main
-  cfg = Trollop::options do
+  conf = Trollop::options do
     opt :kbest_lists, "kbest lists", :type => :string, :required => true
     opt :references, "reference", :type => :string, :required => true
     opt :n, "N for BLEU", :type => :int, :default => 4
     opt :weight, "how much to weigh single translations", :type => :int, :default => 1
     opt :debug, "debug mode", :type => :bool, :default => false
   end
-  debug = cfg[:debug]
-  n = cfg[:n]
-  kbest_lists = read_kbest_lists cfg[:kbest_lists]
-  references = ReadFile.readlines_strip cfg[:references]
+  debug = conf[:debug]
+  n = conf[:n]
+  kbest_lists = read_kbest_lists conf[:kbest_lists]
+  references = ReadFile.readlines_strip conf[:references]
   context = get_context kbest_lists, references, n
   kbest_lists.each_with_index { |kbest,j|
     scores = []
@@ -30,7 +30,7 @@ def main
     max_idx = -1
     kbest.each_index { |i|
       context_cp = context.dup
-      context_cp[j] = BLEU::get_counts kbest[i].s, references[j], n, cfg[:weight]
+      context_cp[j] = BLEU::get_counts kbest[i].s, references[j], n, conf[:weight]
       score = BLEU::hbleu_(context_cp, n, debug)
       scores << score
       if score > max_score

@@ -3,7 +3,7 @@
 require 'zipf'
 require 'trollop'
 
-cfg = Trollop::options do
+conf = Trollop::options do
   banner "ng < <input>"
   opt :n, "n for Ngrams", :type => :int, :default => 4
   opt :fix, "Don't output lower order Ngrams.", :type => :bool, :default => false
@@ -12,8 +12,8 @@ end
 
 while line = STDIN.gets
   a = []
-  ngrams(line, cfg[:n], cfg[:fix]) { |ng| a << ng.join(' ') }
+  ngrams(line, conf[:n], conf[:fix]) { |ng| a << ng.join(' ') }
   a.reject! { |i| i.strip.size==0 }
-  puts a.join cfg[:separator] if a.size>0
+  puts a.join conf[:separator] if a.size>0
 end
 

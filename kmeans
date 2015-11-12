@@ -57,7 +57,7 @@ def update assignment, data
 end
 
 def main
-  cfg = Trollop::options do
+  conf = Trollop::options do
     opt :k, "k", :type => :int, :required => true
     opt :input, "input: one feature vector per line", :type => :string, :required => true
     opt :max_iterations, "max. number of iterations", :type => :int, :default => 100
@@ -65,26 +65,26 @@ def main
     opt :init, "centroid initialization (1: sample k features vectors, 2: k-times do sample k feature and build mean)", :type => :int, :short => '-j', :default => 2
   end
   # data is 'ID f1=v1 f2=v2'
-  data = read_data cfg[:input]
-  k = cfg[:k]
+  data = read_data conf[:input]
+  k = conf[:k]
   centroids = nil
-  if cfg[:init] == 1
+  if conf[:init] == 1
     centroids = rand_init(data, k)
   else
     centroids = rand_means_init(data, k)
   end
   STDERR.write "\n         k #{k}\n"
-  STDERR.write "     input #{cfg[:input]}\n"
-  STDERR.write "iterations #{cfg[:max_iterations]}\n"
-  STDERR.write "max no ch. #{cfg[:max_no_change]}\n"
-  STDERR.write "      init #{cfg[:init]}\n\n"
+  STDERR.write "     input #{conf[:input]}\n"
+  STDERR.write "iterations #{conf[:max_iterations]}\n"
+  STDERR.write "max no ch. #{conf[:max_no_change]}\n"
+  STDERR.write "      init #{conf[:init]}\n\n"
   assignment = nil
   prev_stats = []
   stats = []
   no_change = 0
   max_no_change = 5
   STDERR.write "expected cluster sz=#{data.size/k.to_f}\n\n"
-  0.upto(cfg[:max_iterations]) do |i|
+  0.upto(conf[:max_iterations]) do |i|
     s = "iteration #{i}"
     STDERR.write "#{s}\n#{'-'*s.size}\n"
     assignment = assign centroids, data

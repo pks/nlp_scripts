@@ -36,14 +36,14 @@ def approx_eql x, y, eps=10**-10
 end
 
 def main
-  cfg = Trollop::options do
+  conf = Trollop::options do
     opt :input,         "input data",         :type => :string, :required => true
     opt :output,        "1/0 output data",    :type => :string, :required => true
   end
-  data = read_data cfg[:input]
+  data = read_data conf[:input]
   dim = data[0].size
   zeros = [0.0]*dim
-  t = ReadFile.readlines(cfg[:output]).map{ |i| i.to_f }
+  t = ReadFile.readlines(conf[:output]).map{ |i| i.to_f }
   model = Vector.elements zeros
   prev_model = nil
   gradient = Vector.elements zeros

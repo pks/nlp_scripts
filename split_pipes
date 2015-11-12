@@ -5,7 +5,7 @@ require 'trollop'
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-cfg = Trollop::options do
+conf = Trollop::options do
   banner "splitpipes -f <n> < <input>"
   opt :field, "field", :type => :int, :required => true
   opt :to,    "to",    :type => :int, :default => nil
@@ -14,18 +14,18 @@ end
 
 a = []
 range = false
-if cfg[:to]
+if conf[:to]
   range = true
 end
 
 if range
-  if cfg[:field] >= cfg[:to]
+  if conf[:field] >= conf[:to]
     STDERR.write "field >= to, exiting\n"
     exit
   end
 end
 
-if cfg[:field]<=0 || (range && cfg[:to]<=0)
+if conf[:field]<=0 || (range && conf[:to]<=0)
   STDERR.write "field or to <= 0, exiting"
   exit
 end
@@ -33,9 +33,9 @@ end
 while line = STDIN.gets
   j = 1
   line.strip.split(' ||| ').each { |i|
-    if range && (cfg[:field]..cfg[:to]).include?(j)
+    if range && (conf[:field]..conf[:to]).include?(j)
       a << i.strip
-    elsif j == cfg[:field] 
+    elsif j == conf[:field] 
       puts i.strip
       break
     end

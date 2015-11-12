@@ -24,7 +24,7 @@ def read_data fn, scale
 end
 
 def main
-  cfg = Trollop::options do
+  conf = Trollop::options do
     opt :input,         "input data",         :type => :string, :required => true
     opt :output,        "output data",        :type => :string, :required => true
     opt :learning_rate, "learning rate",      :type => :float,  :default => 0.07
@@ -32,9 +32,9 @@ def main
     opt :scale_features,"scale features",     :type => :bool,   :default => false, :short => '-t'
     opt :show_loss,     "show loss per iter", :type => :bool,   :default => false
   end
-  data = read_data cfg[:input], cfg[:scale_features]
+  data = read_data conf[:input], conf[:scale_features]
   zeros = [0.0]*data[0].size
-  t = ReadFile.readlines(cfg[:output]).map{ |i| i.to_f }
+  t = ReadFile.readlines(conf[:output]).map{ |i| i.to_f }
   model = SparseVector.new zeros
   stop = 0
   prev_model = nil
@@ -48,15 +48,15 @@ def main
       overall_loss += loss**2
       u += x * loss
     }
-    STDERR.write "#{i} #{overall_loss/data.size}\n" if cfg[:show_loss]
-    u *= cfg[:learning_rate]*(1.0/t.size)
+    STDERR.write "#{i} #{overall_loss/data.size}\n" if conf[:show_loss]
+    u *= conf[:learning_rate]*(1.0/t.size)
     model -= u
     if model.approx_eql? prev_model
       stop += 1
     else
       stop = 0
     end
-    break if stop==cfg[:stop]
+    break if stop==conf[:stop]
     prev_model = model
   end
   tss = t.map{ |y| (y-t.mean)**2 }.sum

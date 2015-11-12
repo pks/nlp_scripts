@@ -4,7 +4,7 @@ require 'zipf'
 require 'trollop'
 
 def main
-  cfg = Trollop::options do
+  conf = Trollop::options do
     opt :documents, "input files (documents)", :type => :string, :required => true
     opt :filter_stopwords, "filter stopwords (give file)", :type => :string, :default => nil
     opt :one_item_per_line, "one item per line (allow multi-word items)", :type => :bool, :default => false
@@ -13,21 +13,21 @@ def main
   end
 
   stopwords = []
-  if cfg[:filter_stopwords]
-    stopwords = ReadFile.readlines(cfg[:filter_stopwords]).map{ |i|
+  if conf[:filter_stopwords]
+    stopwords = ReadFile.readlines(conf[:filter_stopwords]).map{ |i|
       i.split('|').first.strip
     }.reject{ |i| i=='' }
   end
 
   docs = {}
   a = []
-  if cfg[:documents].strip[0] == "*"
-    ad = Dir.glob(cfg[:documents])
+  if conf[:documents].strip[0] == "*"
+    ad = Dir.glob(conf[:documents])
   else
-    ad = cfg[:documents].split
+    ad = conf[:documents].split
   end
   ad.each { |i|
-    if cfg[:one_item_per_line]
+    if conf[:one_item_per_line]
       docs[i] = ReadFile.readlines_strip i
     else
      docs[i] = ReadFile.read(i).split(/\s/).map{ |i| i.strip }
@@ -38,9 +38,9 @@ def main
 
   docs.each_pair { |name, words|
     just_tf = TFIDF::tf words, stopwords
-    just_tf = TFIDF::ntf(just_tf) if cfg[:ntf]
+    just_tf = TFIDF::ntf(just_tf) if conf[:ntf]
     tf_idf = {}; tf_idf.default = 0.0
-    if cfg[:idf]
+    if conf[:idf]
       just_tf.each_pair { |word,f|
         tf_idf[word] = idf_values[word] * f
       }

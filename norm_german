@@ -7,7 +7,7 @@ STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
 
-cfg = Trollop::options do
+conf = Trollop::options do
   banner "norm_german < <file w/ lowercased tokens>"
   opt :upper, "uppercase", :type => :bool, :default => false
   opt :threads, "#threads", :type => :int, :default => 1, :short => '-h'
@@ -18,7 +18,7 @@ end
 
 pairs_lower = [ ['ß','ss'], ['ue', 'ü'], ['ae','ä'], ['oe', 'ö'] ]
 pairs_upper = [ ['Ä', 'Ae'], ['Ö', 'Oe'], ['Ü', 'Ue'] ]
-if cfg[:upper]
+if conf[:upper]
   PAIRS = pairs_lower
 else
   PAIRS = pairs_lower+pairs_upper
@@ -58,7 +58,7 @@ while tok = STDIN.gets
   token_stock << [] if !token_stock[thread_n]
   token_stock[thread_n] << tok.strip!
   counter += 1
-  if token_stock[thread_n].size%cfg[:shard_size]==0
+  if token_stock[thread_n].size%conf[:shard_size]==0
     STDERR.write "Starting thread ##{thread_n}\n"
     threads << Thread.new(token_stock[thread_n]) { |tokens|
       th = build_partial tokens
@@ -71,7 +71,7 @@ while tok = STDIN.gets
   else
     next
   end
-  if thread_n==cfg[:threads]
+  if thread_n==conf[:threads]
     threads.each { |i|  i.join }
     token_stock.each { |i| i.clear }
     thread_n = 0
