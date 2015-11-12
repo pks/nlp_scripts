@@ -1,0 +1,9 @@
+#!/usr/bin/ruby
+
+STDIN.set_encoding 'utf-8'
+STDOUT.set_encoding 'utf-8'
+
+while line = STDIN.gets
+  puts line.strip.split(/\s/).size
+end
+
