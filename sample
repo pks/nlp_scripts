@@ -50,7 +50,7 @@ while idx = sample.shift
     puts idx
   else
     if opts[:output_index]
-      puts "#{idx} #{input[idx]}"
+      puts "#{idx}\t#{input[idx]}"
     else
       puts "#{input[idx]}"
     end
