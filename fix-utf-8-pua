@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+# remove private use area chars
+
+while line = STDIN.gets
+  line.strip!
+  line.gsub! /[\u{e000}-\u{f8ff}]/, " "
+  puts line
+end
+
