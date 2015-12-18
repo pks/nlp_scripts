@@ -5,6 +5,7 @@ require 'trollop'
 conf = Trollop::options do
   banner "stddev [-r <d>] < <one number per line>"
   opt :round, "Number of digits after decimal point.", :type => :int, :default => -1
+  opt :corrected, "corrected stddev", :type => :bool, :default => false
 end
 
 sum = 0.0
@@ -24,7 +25,12 @@ cached.each { |v|
   var += (avg - v)**2
 }
 
-stddev = Math.sqrt(var/i.to_f)
+stddev = 0
+if conf[:corrected]
+  stddev = Math.sqrt(var/(i.to_f-1))
+else
+  stddev = Math.sqrt(var/i.to_f)
+end
 
 if conf[:round] >= 0
   puts stddev.round conf[:round]
