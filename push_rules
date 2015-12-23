@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+a = ReadFile.readlines_strip ARGV[0]
+h = {}
+a.each { |i|
+  h[i] = true
+}
+
+f = ARGV[1].to_f
+while line = STDIN.gets
+  line.strip!
+  s,weight = line.split
+  weight = weight.to_f
+  a,_,target = s.rpartition ":"
+  _,_,source = a.split(":",3)
+  if (h[source])
+    puts "#{s}\t#{weight*f}"
+  else
+    puts line
+  end
+end
+
