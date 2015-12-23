@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+HADOOP_HOME=/usr/lib/hadoop
+
+$HADOOP_HOME/bin/hadoop  jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+    -D mapred.reduce.tasks=98 \
+    -input d \
+    -output d.uniq \
+    -mapper 'cut -d " " -f 1' \
+    -reducer /usr/bin/uniq
+
