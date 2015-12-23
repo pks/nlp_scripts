@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+uniq = false
+uniq = true if ARGV[0]
+
+while line = STDIN.gets
+  a = line.strip.split
+  a.uniq! if uniq
+  a.sort!
+  puts a.join " "
+end
+
