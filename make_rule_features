@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+def mkrf src, tgt
+  s = src.gsub /\[X,[1-9]\]/, "NX"
+  t = tgt.gsub /\[X,([1-9])\]/,'N\1'
+  return "R:X:#{s.gsub(" ","_")}:#{t.gsub(" ","_")}"
+end
+
+def mkrbf s, t
+  s = String.new s
+  if t == "S"
+    s.gsub! /\[X,[1-9]\]/, "X"
+  else
+    s.gsub! /\[X,([1-9])\]/, 'X\1' 
+  end
+  s.reverse!
+  s += " >r<"
+  s.reverse!
+  s += " </r>"
+  a = []
+  ngrams(s, 2, true) { |ng|
+    a << "RB#{t}:#{ng.join "_"}"
+  }
+  return a
+end
+
+h = {}
+while line = STDIN.gets
+  _,src,tgt,_,_ = splitpipe line.strip
+  src.strip!
+  tgt.strip!
+  mkrbf(src, "S").each { |f|
+    h[f] = true
+  }
+  mkrbf(tgt, "T").each { |f|
+    h[f] = true
+  }
+  h [mkrf(src, tgt)] = true
+end
+
+h.keys.each { |f| puts f }
+
