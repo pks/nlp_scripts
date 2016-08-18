@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+ng = [{},{},{},{}]
+
+while line = STDIN.gets
+  ngrams(line, 4) { |g|
+    if ng[g.size-1].has_key? g
+      ng[g.size-1][g] += 1
+    else
+      ng[g.size-1][g] = 1
+    end
+  }
+end
+
+rr = 1.0
+ng.each_with_index { |h,j|
+  singletons = ng[j].reject { |k,v| v > 1 }.size
+  rr *= (ng[j].size - singletons).to_f/ng[j].size.to_f
+}
+
+rr = rr**0.25
+
+puts rr
+
