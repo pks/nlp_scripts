@@ -1,6 +1,0 @@
-#!/usr/bin/env ruby
-
-while line = STDIN.gets
-  puts "#{eval line}"
-end
-
