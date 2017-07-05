@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+a = {}
+a.default = 0
+ReadFile.readlines_strip(ARGV[0]).map { |segment| a[segment] += 1 }
+b = {}
+b.default = 0
+ReadFile.readlines_strip(ARGV[1]).map { |segment| b[segment] += 1 }
+
+overlap = 0
+a.each_key { |seg|
+  puts b[seg] 
+  overlap = overlap+b[seg] 
+}
+
+puts "---"
+puts overlap
+
