@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+f =  ReadFile.new ARGV[0]
+g =  ReadFile.new ARGV[1]
+h = ReadFile.new ARGV[2]
+
+i = 0
+while line = f.gets
+  line1 = g.gets
+  line2 = h.gets
+  b1 = (BLEU::per_sentence_bleu(line1.strip, line.split, 4)*100).round 1
+  b2 = (BLEU::per_sentence_bleu(line2.strip, line.split, 4)*100).round 1
+  puts i
+  puts "ref) " + line
+  puts "org #{b1}) " + line1
+  puts "ada #{b2}) " + line2
+  puts " >>> #{(b2-b1).round 1} <<<"
+  puts
+  i += 1
+end
+
