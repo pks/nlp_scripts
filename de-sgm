@@ -1,4 +1,4 @@
 #!/bin/sh
 
-grep -v -P "^[[:space:]]*(<\?xml.*\?>|</?(mteval|doc|srcset|refset)[^>]*>)[[:space:]]*$" | grep -v -P "^[[:space:]]*<(url|description|keywords|talkid|title)>.*</(url|description|keywords|talkid|title)>[[:space:]]*$" | sed "s|<seg[^>]*>\s*||" | sed "s|\s*</seg>$||"
+grep -v "^[[:space:]]*(<\?xml.*\?>|</?(mteval|doc|srcset|refset)[^>]*>)[[:space:]]*$" | grep -v "^[[:space:]]*<(url|description|keywords|talkid|title)>.*</(url|description|keywords|talkid|title)>[[:space:]]*$" | sed "s|<seg[^>]*>\s*||" | sed "s|\s*</seg>$||"
 
