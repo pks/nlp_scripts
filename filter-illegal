@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+illegal = [ "[", "]", "|||" ]
+
+in0 = File.new ARGV[0]
+in1 = File.new ARGV[1]
+
+i = 0
+skipi = []
+while line0 = in0.gets
+  line1 = in1.gets
+  skip = false
+  illegal.each { |k|
+    if line0.index(k) or line1.index(k) then
+      skip = true
+      skipi << i 
+    end
+  }
+  i += 1
+end
+
+skipi.each { |j| puts j }
+
