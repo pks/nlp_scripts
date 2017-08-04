@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+lens = []
+while line = STDIN.gets
+  lens << line.strip.split.size
+end
+
+puts lens.inject(:+)/lens.size.to_f
+
