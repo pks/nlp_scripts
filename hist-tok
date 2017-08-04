@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+counts = {}
+counts.default = 0
+while line = STDIN.gets
+  toks = line.strip.split
+  toks.each { |tok|
+    counts[tok] += 1
+  }
+end
+
+sorted = []
+counts.each_pair { |k,v|
+  sorted << [k,v]
+}
+
+sorted.sort_by! { |i|
+  -i[1]
+}
+
+sorted.each { |i|
+  puts "#{i[0]}\t#{i[1]}"
+}
+
