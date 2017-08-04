@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+f =  ReadFile.new ARGV[0]
+g =  ReadFile.new ARGV[1]
+h = ReadFile.new ARGV[2]
+
+refs = []
+sys1 = []
+sys2 = []
+diffs = []
+while line = f.gets
+  line1 = g.gets
+  line2 = h.gets
+  refs << line
+  sys1 << line1
+  sys2 << line2
+
+  ff=File.new("/tmp/refs",'w+');ff.write(refs.join(""));ff.close
+  ff=File.new("/tmp/sys1",'w+');ff.write(sys1.join(""));ff.close
+  ff=File.new("/tmp/sys2",'w+');ff.write(sys2.join(""));ff.close
+
+  #a = `~/multi-bleu.perl /tmp/refs < /tmp/sys1`.split[2].gsub(',','').to_f 
+  a = BLEU::bleu("/tmp/sys1", "/tmp/refs", 4)
+  b = BLEU::bleu("/tmp/sys2", "/tmp/refs", 4)
+  diffs << b-a
+
+  #puts ((diffs.inject(:+)/diffs.size)*100).round 2
+  puts (diffs[-1]*100).round 2
+end
+
