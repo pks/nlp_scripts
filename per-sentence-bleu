@@ -20,7 +20,7 @@ def main
       puts 0.0
       next
     end
-    puts BLEU::per_sentence_bleu line.strip, refs[i], conf[:n], conf[:len_hack]
+    puts BLEU::per_sentence_bleu line.strip, refs[i].split, conf[:n], conf[:len_hack]
   end
   input.close
 end
