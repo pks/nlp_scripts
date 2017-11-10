@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+windows = []
+cur = []
+cur_sz = 0
+while line = STDIN.gets
+  if cur_sz >= 1000
+    windows << cur
+    cur = []
+  else
+    cur << line.strip
+    cur_size += cur[-1].split.size
+  end
+end
+
+windows.each { |w|
+  h = {}
+  h.default = 0
+  w.each { |seg|
+    ngrams(seg, 4) { |ng|
+      h[ng] += 1
+    }
+  }
+  puts h
+}
+
