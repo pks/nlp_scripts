@@ -29,7 +29,6 @@ windows.each { |w|
     }
   }
   ng_by_n.each_with_index { |ng,j|
-    puts ng.to_s
     singletons = ng.reject { |k,v| v > 1 }.size
     enums[j] += ng.size - singletons
     denoms[j] += ng.size.to_f
