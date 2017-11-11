@@ -2,25 +2,43 @@
 
 require 'zipf'
 
-ng = [{},{},{},{}]
-
+windows = []
+cur = []
+cur_sz = 0
 while line = STDIN.gets
-  ngrams(line, 4) { |g|
-    if ng[g.size-1].has_key? g
-      ng[g.size-1][g] += 1
-    else
-      ng[g.size-1][g] = 1
-    end
-  }
+  if cur_sz >= 1000
+    windows << cur
+    cur = []
+    cur_sz = 0 
+  end
+  cur << line.strip
+  cur_sz += cur.last.split.size
 end
 
-rr = 1.0
-ng.each_with_index { |h,j|
-  singletons = ng[j].reject { |k,v| v > 1 }.size
-  rr *= (ng[j].size - singletons).to_f/ng[j].size.to_f
+enums = [0.0]*4
+denoms = [0.0]*4
+windows.each { |w|
+  ng_by_n = [{}]*4
+  w.each { |seg|
+    ngrams(seg, 4) { |ng|
+      if ng_by_n[ng.size-1].has_key? ng
+        ng_by_n[ng.size-1][ng] += 1
+      else
+        ng_by_n[ng.size-1][ng] = 1
+      end
+    }
+  }
+  ng_by_n.each_with_index { |ng,j|
+    singletons = ng.reject { |k,v| v > 1 }.size
+    enums[j] += ng.size - singletons
+    denoms[j] += ng.size.to_f
+  }
 }
 
-rr = rr**0.25
+rr = 1.0
+enums.each_with_index { |i,j|
+  rr *= i/denoms[j] 
+}
 
-puts rr
+puts ((rr**0.25)*100).round 2
 
