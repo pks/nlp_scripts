@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+d = {}
+while line = STDIN.gets
+  line.strip.split.each { |tok|
+    d[tok] = true
+  }
+end
+
+puts d.size
+
