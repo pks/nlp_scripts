@@ -10,8 +10,6 @@ opts = Trollop::options do
   opt :from1,  "Index starting from 1.", :type => :bool, :short => '-k', :default => false
 end
 
-puts opts
-
 accept = {}
 f = ReadFile.new opts[:index]
 f.readlines_strip.each { |line|
