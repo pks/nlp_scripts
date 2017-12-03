@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+
+import sys
+import langdetect
+
+from_stdin = False
+if sys.argv[1] == '-':
+    f = sys.stdin
+    from_stdin = True
+else:
+    f = open(sys.argv[1], 'r')
+
+try:
+    l = sys.argv[2].strip()
+except:
+    l = None
+
+try:
+   min_p = max(0.0, min(1.0, float(sys.argv[3].strip())))
+   if min_p == 0.0:
+       min_p = None
+except:
+   min_p = None
+
+if min_p and not l:
+   l = None
+     
+
+factory = langdetect.detector_factory.DetectorFactory()
+factory.load_profile(langdetect.detector_factory.PROFILES_DIRECTORY)
+factory.set_seed(31337)
+
+for line in f:
+    try:
+        detector = factory.create()
+        detector.append(line.strip())
+        ld = detector.get_probabilities()
+        print(ld)
+    except:
+        print("unk")
+        continue
+
+    done = False
+    if l and len(l) > 1:
+        if min_p != None:
+            for i in ld:
+                if i.lang == l:
+                    if i.prob >= min_p:
+                        print(i.lang)
+                        done = True
+                        break
+        else:
+            if l in map(lambda x: x.lang, ld):
+                print(l)
+                done = True
+
+    if not done:
+        print(ld[0].lang)
+    print('---')
+
+
+if not from_stdin:
+    f.close
