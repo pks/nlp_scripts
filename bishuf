@@ -9,9 +9,10 @@ if [[ $? -ne 0 ]]; then
   fi
 fi
 
-F=$(mktemp /tmp/bishuf.XXXXXX)
-echo 42 > $F
-$SHUF --random-source=$F $1 > $1.shuf
-$SHUF --random-source=$F $2 > $2.shuf
-rm $F
+
+get_random() { seed="$1"; openssl enc -aes-256-ctr -pass pass:"$seed" -nosalt < /dev/zero 2>/dev/null; }
+
+echo "shuffling ..."
+$SHUF --random-source=<(get_random 42) $1 > $1.shuf
+$SHUF --random-source=<(get_random 42) $2 > $2.shuf
 
