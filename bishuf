@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+SHUF=$(which shuf)
+if [[ $? -ne 0 ]]; then
+  SHUF=$(which gshuf)
+  if [[ $? -ne 0 ]]; then
+    echo "no `shuf` found, exiting"
+    exit
+  fi
+fi
+
+F=$(mktemp /tmp/bishuf.XXXXXX)
+echo 42 > $F
+$SHUF --random-source=$F $1 > $1.shuf
+$SHUF --random-source=$F $2 > $2.shuf
+rm $F
+
