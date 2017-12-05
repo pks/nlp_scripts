@@ -22,8 +22,16 @@ try:
 except:
    min_p = None
 
+try:
+    strict = bool(sys.argv[4].strip())
+except:
+    strict = False
+
 if min_p and not l:
    l = None
+
+if strict and not min_p:
+   strict = False
      
 
 factory = langdetect.detector_factory.DetectorFactory()
@@ -35,29 +43,33 @@ for line in f:
         detector = factory.create()
         detector.append(line.strip())
         ld = detector.get_probabilities()
-        print(ld)
     except:
         print("unk")
         continue
 
     done = False
-    if l and len(l) > 1:
+    if l and len(ld) > 1:
         if min_p != None:
             for i in ld:
                 if i.lang == l:
                     if i.prob >= min_p:
                         print(i.lang)
                         done = True
-                        break
+                    break
         else:
             if l in map(lambda x: x.lang, ld):
                 print(l)
-                done = True
+                continue
 
     if not done:
-        print(ld[0].lang)
-    print('---')
-
+        if not strict:
+            print(ld[0].lang)
+        else:
+            if ld[0].prob >= min_p:
+                print(ld[0].lang)
+            else:
+                print("unk")
 
 if not from_stdin:
     f.close
+
