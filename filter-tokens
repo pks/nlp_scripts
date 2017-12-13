@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+bad_words = {}
+ReadFile.readlines_strip(ARGV[0]).each { |line|
+  bad_words[line] = true
+}
+
+i = 0
+while line = STDIN.gets
+  bad = false
+  tokens = line.split
+  bad_words.keys.each { |w|
+    if tokens.include? w
+      bad = true 
+      break
+    end
+  }
+  puts i if bad
+  i += 1
+end
+
