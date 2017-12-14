@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+a = ReadFile.new ARGV[0]
+b = ReadFile.new ARGV[1]
+
+while linea = a.gets
+  lineb = b.gets
+  puts linea.strip.split.size.to_f / lineb.strip.split.size.to_f
+end
+
