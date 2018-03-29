@@ -9,10 +9,9 @@ def main
     opt :output_suffix, "output suffix", :type => :string, :default => ".out", :short => "-S"
     opt :min_len, "minimum length", :type => :int, :default => 1, :short => "-m"
     opt :max_len, "maximum length", :type => :int, :default => 1000, :short => "-M"
-    #opt :ratio, "length ratio", :type => :float, :default => 0.0001, :short => "-r"
-    #opt :ratio_min_len, "minimum length to apply ratio test", :type => :int, :default => 7, :short => "-R"
-    opt :ratio_avg, "length ratio average", :type => :float, :required => true, :short => "-A"
-    opt :ratio_std, "length ratio standard deviation", :type => :float, :required => true, :short => "-T"
+    opt :ignore_below, "minimum length to apply ratio test", :type => :int, :default => 7, :short => "-I"
+    opt :ratio_mean, "length ratio average", :type => :float, :required => true, :short => "-A"
+    opt :ratio_stddev, "length ratio standard deviation", :type => :float, :required => true, :short => "-T"
   end
 
   fna,fnb = conf[:inputs].split ','
@@ -21,28 +20,21 @@ def main
   a_out = WriteFile.new fna+conf[:output_suffix]
   b_out = WriteFile.new fnb+conf[:output_suffix]
 
-  ratio_lower = conf[:ratio_avg] - conf[:ratio_std]
-  ratio_upper = conf[:ratio_avg] + conf[:ratio_std]
+  ratio_lower = conf[:ratio_mean] - conf[:ratio_stddev]
+  ratio_upper = conf[:ratio_mean] + conf[:ratio_stddev]
 
   while linea = a.gets
     lineb = b.gets
     sza = linea.strip.split.size
     szb = lineb.strip.split.size
-    #_ = [sza,szb].map{|i|i.to_f}.sort
     ratio = sza.to_f/szb.to_f
-    if sza >= conf[:min_len] and szb >= conf[:min_len] and
-       sza <= conf[:max_len] and szb <= conf[:max_len] and
-       ratio >= ratio_lower and
-       ratio <= ratio_upper
-      #if _[0] >= conf[:ratio_min_len]
-      #  ratio_ok = (_[0] / _[1]) >= conf[:ratio]
-      #else
-      #  ratio_ok = true
-      #end
-      #if ratio_ok
+    if sza <= conf[:ignore_below] and szb <= conf[:ignore_below] or
+        (sza >= conf[:min_len] and szb >= conf[:min_len] and
+         sza <= conf[:max_len] and szb <= conf[:max_len] and
+         ratio >= ratio_lower and
+       ratio <= ratio_upper)
       a_out.write linea
       b_out.write lineb
-      #end
     end
   end
 
