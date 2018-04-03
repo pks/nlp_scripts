@@ -28,7 +28,7 @@ def main
     sza = linea.strip.split.size
     szb = lineb.strip.split.size
     ratio = sza.to_f/szb.to_f
-    if sza <= conf[:ignore_below] and szb <= conf[:ignore_below] or
+    if (sza > 0 and sza <= conf[:ignore_below] and szb > 0 and szb <= conf[:ignore_below]) or
         (sza >= conf[:min_len] and szb >= conf[:min_len] and
          sza <= conf[:max_len] and szb <= conf[:max_len] and
          ratio >= ratio_lower and
