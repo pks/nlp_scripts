@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+
+conf = Trollop::options do
+  banner "cma < <one number per line>"
+  opt :round, "Number of digits after decimal point.", :type => :int, :default => -1
+end
+
+cma = 0.0
+i = 0
+while line = STDIN.gets
+  x = line.to_f
+  cma = cma + ((x - cma)/(i+1))
+  i +=1
+  if conf[:round] >= 0
+    puts cma.round conf[:round]
+  else
+    puts cma
+  end
+end
+
