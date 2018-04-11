@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+f = ReadFile.new ARGV[0]
+g = ReadFile.new ARGV[1]
+
+while line1 = f.gets
+  line2 = g.gets
+  d = line1.to_f - line2.to_f
+  puts d
+end
+
