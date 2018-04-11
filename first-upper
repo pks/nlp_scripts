@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+while line = STDIN.gets
+  line.strip!
+  line[0] = line[0].upcase
+  puts line
+end
+
