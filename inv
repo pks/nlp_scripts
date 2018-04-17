@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+
+def main
+  conf = Trollop::options do
+    opt :only_low, "inverse only for values < 1.0", :type => :bool, :default => false, :short => "-l"
+    opt :only_high, "inverse only for values > 1.0", :type => :bool, :default => false, :short => "-h"
+  end
+
+  while line = STDIN.gets
+    f = line.to_f
+
+    if conf[:only_low]
+      if f < 1
+        puts line.to_f**(-1)
+      else
+        puts line.to_f
+      end
+    elsif conf[:only_high]
+      if f > 1
+        puts line.to_f**(-1)
+      else
+        puts line.to_f
+      end
+    else
+        puts line.to_f**(-1)
+    end
+  end
+end
+
+main
+
