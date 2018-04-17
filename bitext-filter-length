@@ -7,41 +7,58 @@ def main
   conf = Trollop::options do
     opt :inputs, "inputs, comma separated", :type => :string, :short => "-i", :required => true
     opt :output_suffix, "output suffix", :type => :string, :default => ".out", :short => "-S"
+    opt :output_index, "output index", :type => :bool, :default => false, :short => "-J"
     opt :min_len, "minimum length", :type => :int, :default => 1, :short => "-m"
     opt :max_len, "maximum length", :type => :int, :default => 1000, :short => "-M"
     opt :ignore_below, "minimum length to apply ratio test", :type => :int, :default => 7, :short => "-I"
     opt :ratio_mean, "length ratio average", :type => :float, :required => true, :short => "-A"
     opt :ratio_stddev, "length ratio standard deviation", :type => :float, :required => true, :short => "-T"
+    opt :stddev_mult, "+/- n stddevs", :type => :float, :default => 2.0, :short => "-N"
+    opt :reverse, "length ratios alway > 1", :type => :bool, :default => false, :short => "-r"
   end
 
   fna,fnb = conf[:inputs].split ','
   a = ReadFile.new fna 
   b = ReadFile.new fnb
-  a_out = WriteFile.new fna+conf[:output_suffix]
-  b_out = WriteFile.new fnb+conf[:output_suffix]
 
-  ratio_lower = conf[:ratio_mean] - conf[:ratio_stddev]
-  ratio_upper = conf[:ratio_mean] + conf[:ratio_stddev]
+  if not conf[:output_index]
+    a_out = WriteFile.new fna+conf[:output_suffix]
+    b_out = WriteFile.new fnb+conf[:output_suffix]
+  end
 
+  ratio_lower = conf[:ratio_mean] - (conf[:stddev_mult] * conf[:ratio_stddev])
+  ratio_upper = conf[:ratio_mean] + (conf[:stddev_mult] * conf[:ratio_stddev])
+
+  i = 0
   while linea = a.gets
     lineb = b.gets
     sza = linea.strip.split.size
     szb = lineb.strip.split.size
     ratio = sza.to_f/szb.to_f
+    if conf[:reverse] and ratio < 1
+      ratio = ratio**(-1)
+    end
     if (sza > 0 and sza <= conf[:ignore_below] and szb > 0 and szb <= conf[:ignore_below]) or
         (sza >= conf[:min_len] and szb >= conf[:min_len] and
          sza <= conf[:max_len] and szb <= conf[:max_len] and
          ratio >= ratio_lower and
-       ratio <= ratio_upper)
-      a_out.write linea
-      b_out.write lineb
+         ratio <= ratio_upper)
+      if not conf[:output_index]
+        a_out.write linea
+        b_out.write lineb
+      else
+        puts i
+      end
     end
+    i += 1
   end
 
   a.close
   b.close
-  a_out.close
-  b_out.close
+  if not conf[:output_index]
+    a_out.close
+    b_out.close
+  end
 end
 
 main
