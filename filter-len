@@ -4,14 +4,17 @@ require 'zipf'
 
 a = ReadFile.new ARGV[0]
 b = ReadFile.new ARGV[1]
-max = ARGV[2].to_i
+min = ARGV[2].to_i
+max = ARGV[3].to_i
 
 a_out = WriteFile.new ARGV[0]+".out"
 b_out = WriteFile.new ARGV[1]+".out"
 
 while line = a.gets
   line1 = b.gets
-  if line.strip.split.size <= max and line1.strip.split.size <= max
+  len = line.strip.split.size
+  len1 = line1.strip.split.size
+  if len >= min and len1 >= min and len <= max and len1 <= max
     a_out.write line
     b_out.write line1
   end
