@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+sum = 0.0
+ReadFile.readlines_strip(ARGV[0]).each { |i|
+  sum += i.to_f
+  puts sum
+}
+
