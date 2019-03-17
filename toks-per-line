@@ -1,12 +1,17 @@
 #!/usr/bin/env ruby
 
 uniq = false
-uniq = true if ARGV[0]
+uniq = true if ARGV.include? "uniq"
+count = true if ARGV.include? "count"
 
 while line = STDIN.gets
   a = line.strip.split
   a.uniq! if uniq
   a.sort!
-  puts a.join " "
+  if not count
+    puts a.join " "
+  else
+    puts a.size
+  end
 end
 
