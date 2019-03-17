@@ -22,7 +22,7 @@ def main
     a.write line+"\n"
     b.write refs[i]+"\n"
     a.close; b.close
-    score = `/toolbox/cdec-dtrain/mteval/fast_score -i #{a.path} -r #{b.path} -m ter 2>/dev/null`
+    score = `#{conf[:mteval_bin]} -i #{a.path} -r #{b.path} -m ter 2>/dev/null`
     puts score
     a.unlink; b.unlink
   end
