@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'trollop'
+require 'optimist'
 require 'zipf'
 
-o = Trollop::options do
+o = Optimist::options do
   opt :grammar, "(Absolute) path of folder containing grammars.", :type => :string, :short => '-g', :default => nil
   opt :loo, "leave one out", :type => :bool, :default => false
   opt :start_id, "start with this id", :type => :int, :default => 0, :short => '-i'

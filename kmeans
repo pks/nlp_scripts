@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'zipf'
-require 'trollop'
+require 'optimist'
 
 def read_data fn
   data = {}
@@ -57,7 +57,7 @@ def update assignment, data
 end
 
 def main
-  conf = Trollop::options do
+  conf = Optimist::options do
     opt :k, "k", :type => :int, :required => true
     opt :input, "input: one feature vector per line", :type => :string, :required => true
     opt :max_iterations, "max. number of iterations", :type => :int, :default => 100

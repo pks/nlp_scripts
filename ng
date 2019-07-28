@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'zipf'
-require 'trollop'
+require 'optimist'
 
-conf = Trollop::options do
+conf = Optimist::options do
   banner "ng < <input>"
   opt :n, "n for Ngrams", :type => :int, :default => 4
   opt :fix, "Don't output lower order Ngrams.", :type => :bool, :default => false

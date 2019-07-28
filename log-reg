@@ -2,7 +2,7 @@
 
 require 'zipf'
 require 'matrix'
-require 'trollop'
+require 'optimist'
 
 def read_data fn
   f = ReadFile.new fn
@@ -36,7 +36,7 @@ def approx_eql x, y, eps=10**-10
 end
 
 def main
-  conf = Trollop::options do
+  conf = Optimist::options do
     opt :input,         "input data",         :type => :string, :required => true
     opt :output,        "1/0 output data",    :type => :string, :required => true
   end

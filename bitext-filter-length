@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'zipf'
-require 'trollop'
+require 'optimist'
 
 def main
-  conf = Trollop::options do
+  conf = Optimist::options do
     opt :inputs, "inputs, comma separated", :type => :string, :short => "-i", :required => true
     opt :output_suffix, "output suffix", :type => :string, :default => ".out", :short => "-S"
     opt :output_index, "output index", :type => :bool, :default => false, :short => "-J"

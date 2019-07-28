@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'zipf'
-require 'trollop'
+require 'optimist'
 
 def get_context kbest_lists, references, n
   a = []
@@ -12,7 +12,7 @@ def get_context kbest_lists, references, n
 end
 
 def main
-  conf = Trollop::options do
+  conf = Optimist::options do
     opt :kbest_lists, "kbest lists", :type => :string, :required => true
     opt :references, "reference", :type => :string, :required => true
     opt :n, "N for BLEU", :type => :int, :default => 4

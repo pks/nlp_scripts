@@ -1,9 +1,9 @@
 #!/usr/bin/ruby
 
 require 'zipf'
-require 'trollop'
+require 'optimist'
 
-conf = Trollop::options do
+conf = Optimist::options do
   opt :min, "minimum #tokens", :type => :int, :default => 1
   opt :max, "maximum #tokens", :type => :int, :default => 80, :short => '-n'
   opt :in_f, "input 'French' file", :type => :string, :required => true

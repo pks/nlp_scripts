@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'trollop'
+require 'optimist'
 
 def main
-  conf = Trollop::options do
+  conf = Optimist::options do
     opt :only_low, "inverse only for values < 1.0", :type => :bool, :default => false, :short => "-l"
     opt :only_high, "inverse only for values > 1.0", :type => :bool, :default => false, :short => "-h"
   end
