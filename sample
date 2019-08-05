@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'trollop'
+require 'optimist'
 
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-opts = Trollop::options do
+opts = Optimist::options do
   banner "sample --size <n> [--shuffle] --file <line separated data>"
   opt :size, "Sample P % or # lines from file or N.", :type => :float
   opt :shuffle, "Sample is shuffled.", :type => :bool

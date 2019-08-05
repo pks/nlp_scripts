@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'trollop'
+require 'optimist'
 require 'zipf'
 
-opts = Trollop::options do
+opts = Optimist::options do
   banner "sample --index <n> [--shuffle] [--file <line separated data>]"
   opt :file, "Input file.", :type => :string, :default => '-'
   opt :index, "Index file.", :type => :string, :required => true

@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'trollop'
+require 'optimist'
 require 'zipf'
 
-opts = Trollop::options do
+opts = Optimist::options do
   banner "select_from [--invert] -i <file> < <line separated data>"
   opt :index,  "Line numbers to output.", :type => :string, :short => '-i', :required => true
   opt :invert, "Invert selection.", :type => :bool, :short => '-j', :default => false

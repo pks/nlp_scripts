@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'zipf'
-require 'trollop'
+require 'optimist'
 
 def main
-  conf = Trollop::options do
+  conf = Optimist::options do
     opt :input, "input", :type => :string, :default => '-'
     opt :references, "references", :type => :string, :required => true
     opt :len_hack, "hack of Nakov et al", :type => :int, :default => 0

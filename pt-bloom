@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 
 require 'bloom-filter'
-require 'trollop'
+require 'optimist'
 
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-conf = Trollop::options do
+conf = Optimist::options do
   opt :size, "number of entries in the filter", :type => :int, :required => true
   opt :error_rate, "error rate", :type => :float, :default => 0.01
 end

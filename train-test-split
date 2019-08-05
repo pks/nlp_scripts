@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'zipf'
-require 'trollop'
+require 'optimist'
 
-conf = Trollop::options do
+conf = Optimist::options do
   opt :foreign, "foreign file", :type => :string, :required => true
   opt :english, "english file", :type => :string, :required => true
   opt :size, "one size", :type => :int, :required => true

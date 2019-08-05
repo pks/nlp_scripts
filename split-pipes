@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'trollop'
+require 'optimist'
 
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
-conf = Trollop::options do
+conf = Optimist::options do
   banner "splitpipes -f <n> < <input>"
   opt :field, "field", :type => :int, :required => true
   opt :to,    "to",    :type => :int, :default => nil

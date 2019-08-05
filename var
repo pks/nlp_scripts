@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'trollop'
+require 'optimist'
 
-conf = Trollop::options do
+conf = Optimist::options do
   banner "stddev [-r <d>] < <one number per line>"
   opt :round, "Number of digits after decimal point.", :type => :int, :default => -1
 end

@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 
 require 'thread'
-require 'trollop'
+require 'optimist'
 
 STDIN.set_encoding 'utf-8'
 STDOUT.set_encoding 'utf-8'
 
 
-conf = Trollop::options do
+conf = Optimist::options do
   banner "norm_german < <file w/ lowercased tokens>"
   opt :upper, "uppercase", :type => :bool, :default => false
   opt :threads, "#threads", :type => :int, :default => 1, :short => '-h'
