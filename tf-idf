@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'zipf'
-require 'trollop'
+require 'optimist'
 
 def main
-  conf = Trollop::options do
+  conf = Optimist::options do
     opt :documents, "input files (documents)", :type => :string, :required => true
     opt :filter_stopwords, "filter stopwords (give file)", :type => :string, :default => nil
     opt :one_item_per_line, "one item per line (allow multi-word items)", :type => :bool, :default => false

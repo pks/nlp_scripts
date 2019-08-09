@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
 require 'zipf'
-require 'trollop'
+require 'optimist'
 require 'tempfile'
 
 def main
-  conf = Trollop::options do
+  conf = Optimist::options do
     opt :input, "input", :type => :string, :default => '-'
     opt :references, "references", :type => :string, :required => true
     opt :mteval_bin, "cdec's mteval/fast_score", :type => :string, :default => '`/toolbox/cdec-dtrain/mteval/fast_score'

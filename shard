@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'trollop'
+require 'optimist'
 
 def make_shards(input, refs, alignments, output_prefix, num_shards=2, rand=false)
   lc = `wc -l #{input}`.split.first.to_i
@@ -67,7 +67,7 @@ def make_shards(input, refs, alignments, output_prefix, num_shards=2, rand=false
   return [in_fns, refs_fns]
 end
 
-opts = Trollop::options do
+opts = Optimist::options do
   opt :input, 'input', :type => :string, :required => true
   opt :references, 'references', :type => :string, :required => true
   opt :alignments, 'alignments', :type => :string, :required => true
