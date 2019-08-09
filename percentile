@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+data = []
+while line = STDIN.gets
+  data << line.to_f
+end
+
+data.sort!
+
+k = ARGV[0].to_i
+
+index = (k / 100.0) * data.size
+
+if index.to_i == index
+  puts data[index.to_i-1]
+else
+  puts (data[index.to_i-1] + data[index.to_i]) / 2.0
+end
+
