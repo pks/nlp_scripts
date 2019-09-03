@@ -18,5 +18,6 @@ while line = STDIN.gets
   else
     puts cma
   end
+  STDOUT.flush
 end
 
