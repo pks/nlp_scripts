@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+f1 = ReadFile.new ARGV[0]
+f2 = ReadFile.new ARGV[1]
+
+d1 = {}
+d2 = {}
+a1 = []
+a2 = []
+
+while line1 = f1.gets
+  line1.strip!
+
+  line2 = f2.gets
+  line2.strip!
+  
+  if !d1.include? line1 and !d2.include? line2
+    a1 << line1
+    a2 << line2
+  end
+
+  d1[line1] = true
+  d1[line2] = true
+end
+
+o1 = WriteFile.new ARGV[0]+".out"
+o2 = WriteFile.new ARGV[1]+".out"
+
+a1.each_with_index { |line1,i|
+  o1.write line1 + "\n"
+  o2.write a2[i] + "\n"
+}
+
