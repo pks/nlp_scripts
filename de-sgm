@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-egrep -v "^[[:space:]]*(<\?xml.*\?>|</?(mteval|doc|srcset|refset)[^>]*>)[[:space:]]*$" \
-  | egrep -v "^[[:space:]]*<(url|description|keywords|talkid|title)>.*</(url|description|keywords|talkid|title)>[[:space:]]*$" \
+egrep -v "^[[:space:]]*(<\?xml.*\?>|</?(mteval|doc|srcset|refset|translator|reviewer)[^>]*>)[[:space:]]*$" \
+  | egrep -v "^[[:space:]]*<(url|description|keywords|talkid|title|translator|reviewer)[^>]*>.*</(url|description|keywords|talkid|title|translator|reviewer)>[[:space:]]*$" \
   | sed "s|<seg[^>]*>\s*||" | sed "s|\s*</seg>$||"
 
