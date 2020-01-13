@@ -3,5 +3,5 @@
 
 egrep -v "^[[:space:]]*(<\?xml.*\?>|</?(mteval|doc|srcset|refset|translator|reviewer)[^>]*>)[[:space:]]*$" \
   | egrep -v "^[[:space:]]*<(url|description|keywords|talkid|title|translator|reviewer)[^>]*>.*</(url|description|keywords|talkid|title|translator|reviewer)>[[:space:]]*$" \
-  | sed "s|<seg[^>]*>\s*||" | sed "s|\s*</seg>$||"
+  | sed "s|<seg[^>]*>\s*||" | sed "s|\s*</seg>$||" | egrep -v "^[[:space:]]*<p>[[:space:]]*$|^[[:space:]]*</p>[[:space:]]*$"
 
