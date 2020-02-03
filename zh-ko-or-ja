@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+require 'script_detector'
+
+$to_code = {}
+$to_code["Ambiguous Chinese"] = "??"
+$to_code["Simplified Chinese"] = "zh"
+$to_code["Traditional Chinese"] = "zt"
+$to_code["Korean"] = "ko"
+$to_code["Japanese"] = "ja"
+$to_code.default = "??"
+
+while line = STDIN.gets
+  code = $to_code[line.identify_script]
+  puts code
+end
+
