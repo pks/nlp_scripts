@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+while line = STDIN.gets
+  line.strip.each_char { |c|
+    puts c
+  }
+end
+
