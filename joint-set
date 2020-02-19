@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require 'set'
+require 'zipf'
+
+n = ARGV.pop.to_i
+
+all = []
+all_sets = []
+ARGV.each { |file|
+  fp = ReadFile.new file
+  a = []
+  s = Set.new
+  while line = fp.gets
+    a << line
+    s << line
+  end
+  all << a
+  all_sets << s
+}
+
+joint_set = all_sets.pop
+all_sets.each { |set|
+  joint_set &= set
+}
+
+joint_set.each { |i|
+  puts i
+}
+

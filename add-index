@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+i = 0
+if ARGV.size > 0
+  i = ARGV[0].to_i
+end
+
+while line = STDIN.gets
+  puts "#{i}\t#{line}"
+  i += 1
+end
+
