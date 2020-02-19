@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+require 'set'
+require 'zipf'
+require 'optimist'
+
+conf = Optimist::options do
+  opt :n, "Desired number segments in test set.", :type => :int, :required => true
+  opt :tsv, ".tsv files", :type => :strings, :required => true
+  opt :fields, "Which field (0 or 1) to use for each file", :type => :ints, :required => true
+end
+
+all = []
+all_sets = []
+conf[:tsv].each_with_index { |file,file_index|
+  fp = ReadFile.new file
+  a = [[],[]]
+  s = Set.new
+  while line = fp.gets
+    p0, p1 = line.strip.split "\t"
+    a[0] << p0
+    a[1] << p1
+    s << a[conf[:fields][file_index]].last
+  end
+  all << a
+  all_sets << s
+}
+
+joint_set = all_sets.pop
+all_sets.each { |set|
+  joint_set &= set
+}
+sample = joint_set.to_a.shuffle.take conf[:n]
+
+outputs = []
+all.each_with_index { |a,i|
+  o = [[],[]]
+  a[conf[:fields][i]].each_with_index { |segment,j|
+    if sample.include? segment
+      o[0] << a[0][j]
+      o[1] << a[1][j]
+    end
+  }
+  outputs << o
+}
+
+outputs.each_with_index { |o,i|
+  f = WriteFile.new (conf[:tsv][i] + ".joint")
+  o[0].each_index { |j|
+    f.write o[0][j] + "\t" + o[1][j] + "\n"
+  }
+}
+
