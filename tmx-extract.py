@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 #
 # Adapted from Apertium
 # http://wiki.apertium.org/wiki/Tools_for_TMX
@@ -54,23 +54,23 @@ class TMXHandler(ContentHandler):
     def endElement(self, name):
         if name == 'tu' and self.pair == self.cur_pair:
             for lang in self.cur_pair:
-                self.files[lang].write(self.seg[lang].encode('utf-8').strip()+"\n")
+                self.files[lang].write("{}\n".format(self.seg[lang].strip()))
 
-parser = make_parser()
 
-if len(sys.argv) < 3:
-    print 'Usage: tmx-extract.py <file> <slang> <tlang>'
-    print ''
-    sys.exit(-1)
+if __name__ == "__main__":
+    parser = make_parser()
 
-sfile = open(sys.argv[1]+"."+sys.argv[2], 'w+')
-tfile = open(sys.argv[1]+"."+sys.argv[3], 'w+')
-curHandler = TMXHandler(sys.argv[2], sys.argv[3], sfile, tfile)
+    if len(sys.argv) < 3:
+        print('Usage: tmx-extract.py <file> <slang> <tlang>')
+        print('')
+        sys.exit(-1)
 
-parser.setContentHandler(curHandler)
+    sfile_path = sys.argv[1] + "." + sys.argv[2]
+    tfile_path = sys.argv[1] + "." + sys.argv[3]
 
-parser.parse(open(sys.argv[1]))
-
-sfile.close()
-tfile.close()
+    with open(sfile_path, 'w+') as sfile, open(tfile_path, 'w+') as tfile:
+        curHandler = TMXHandler(sys.argv[2], sys.argv[3], sfile, tfile)
+        parser.setContentHandler(curHandler)
+        with open(sys.argv[1], 'r') as tmx_file:
+            parser.parse(tmx_file)
 
