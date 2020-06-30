@@ -54,7 +54,7 @@ class TMXHandler(ContentHandler):
     def endElement(self, name):
         if name == 'tu' and self.pair == self.cur_pair:
             for lang in self.cur_pair:
-                self.files[lang].write("{}\n".format(self.seg[lang].strip()))
+                self.files[lang].write("{}\n".format(self.seg[lang].replace("\n", " ").strip()))
 
 
 if __name__ == "__main__":
