@@ -1,0 +1,22 @@
+import numpy as np
+import optparse
+
+
+def main():
+    cmdlineParser = optparse.OptionParser(usage="")
+    (options, args) = cmdlineParser.parse_args()
+    path = args[0]
+    window = int(args[1])
+    half_window = window/2
+    f = open(path, "r")
+    numbers = []
+    for line in f.readlines():
+        numbers.append(float(line))
+
+    for i in range(len(numbers)):
+        min_id = max(0, i-window)
+        print(np.average(numbers[min_id:i+1]))
+
+
+if __name__ == "__main__":
+    main()
