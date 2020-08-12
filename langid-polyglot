@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+
+import polyglot
+from polyglot.detect import Detector
+import fileinput
+
+for line in fileinput.input():
+    try:
+        for lang in Detector(line).languages:
+            if lang.confidence > 80.0:
+                print(lang.confidence)
+            else:
+                print("??")
+            break
+    except polyglot.detect.base.UnknownLanguage:
+        print("??")
+        pass
+

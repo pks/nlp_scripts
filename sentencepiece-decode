@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+while line = STDIN.gets
+  line = line.split.join ""
+  puts line.gsub "▁", " "
+end
+

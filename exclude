@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+require 'set'
+
+to_exclude = {}
+f = ReadFile.new ARGV[0]
+while line = f.gets
+  to_exclude[line] = true
+end
+
+while line = STDIN.gets
+  if not to_exclude.has_key? line
+    puts line
+  end
+end
+

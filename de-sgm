@@ -1,7 +1,13 @@
 #!/bin/sh
 
-
-egrep -v "^[[:space:]]*(<\?xml.*\?>|</?(mteval|doc|srcset|refset|translator|reviewer)[^>]*>)[[:space:]]*$" \
-  | egrep -v "^[[:space:]]*<(url|description|keywords|talkid|title|translator|reviewer)[^>]*>.*</(url|description|keywords|talkid|title|translator|reviewer)>[[:space:]]*$" \
-  | sed "s|<seg[^>]*>\s*||" | sed "s|\s*</seg>$||"
+egrep -v -i "^[[:space:]]*(<\?xml.*\?>|</?(mteval|doc|srcset|refset|translator|reviewer)[^>]*>)[[:space:]]*$" \
+  | egrep -v -i "^[[:space:]]*<(url|description|keywords|talkid|title|translator|reviewer)[^>]*>.*</(url|description|keywords|talkid|title|translator|reviewer)>[[:space:]]*$" \
+  | sed "s|<seg[^>]*>\s*||" \
+  | sed "s|\s*</seg>\s*$||" \
+  | egrep -v -i "^[[:space:]]*<p>[[:space:]]*$|^[[:space:]]*</p>[[:space:]]*$" \
+  | sed "s|<speaker>\s*||" \
+  | sed "s|\s*</speaker>\s*$||" \
+  | sed "s|\s*<hl>\s*$||" \
+  | sed "s|\s*</hl>\s*$||" \
+  | grep -v -P "^\s*$"
 

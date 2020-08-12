@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+
+require 'set'
+
+strictness = ARGV[0].to_i # 1 one-side
+                          # 2 just the pair
+                          # 3 the pair and one side
+
+if strictness == 1 or strictness == 3
+  side = ARGV[1].to_i # 0 or 1
+end
+
+segments = [[],[]]
+while line = STDIN.gets
+  src, tgt = line.strip.split "\t"
+  segments[0] << src
+  segments[1] << tgt
+end
+
+if strictness == 1
+  seen = Set.new
+  segments[side].each_with_index { |segment,i|
+    if not seen.include? segment
+      puts "#{segments[i][0]}\t#{segments[i][1]}"
+    end
+    seen << segment
+  }
+elsif strictness == 2
+  seen = Set.new
+  segments[0].each_index { |i|
+    segment_pair = [segments[i][0], segments[i][1]]
+    if not seen.include? segment_pair
+      puts "#{segment_pair[0]}\t#{segment_pair[1]}"
+    end
+    seen << segment_pair
+  }
+elsif strictness == 3
+  seen = Set.new
+  seen_pairs = Set.new
+  segments[side].each_with_index { |segment,i|
+    segment_pair = [segments[0][i], segments[1][i]]
+    if not seen_pairs.include? segment_pair and not seen.include? segment
+      puts "#{segment_pair[0]}\t#{segment_pair[1]}"
+    end
+    seen << segment
+    seen_pairs << segment_pair
+  }
+end
+
