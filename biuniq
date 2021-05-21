@@ -14,6 +14,7 @@ while line1 = f1.gets
   line1.strip!
 
   line2 = f2.gets
+  if line2 == nil then line2 = "" end
   line2.strip!
   
   if !d1.include? line1 and !d2.include? line2
