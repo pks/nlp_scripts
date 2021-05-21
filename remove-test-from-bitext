@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+test_source = ReadFile.new ARGV[0]
+test_target = ReadFile.new ARGV[1]
+all_test_source_lines = {}
+all_test_source_lines.default = false
+all_test_target_lines = {}
+all_test_source_lines.default = false
+
+while test_source_line = test_source.gets
+  test_source_line.strip!
+  test_target_line = test_target.gets
+  test_target_line.strip!
+  
+  all_test_source_lines[test_source_line] = true
+  all_test_target_lines[test_target_line] = true
+end
+
+train_source = ReadFile.new ARGV[2]
+train_target = ReadFile.new ARGV[3]
+
+train_source_out = WriteFile.new "#{ARGV[2]}.out"
+train_target_out = WriteFile.new "#{ARGV[3]}.out"
+
+while train_source_line = train_source.gets
+  train_source_line.strip!
+  train_target_line = train_target.gets
+  if train_target_line == nil then train_target_line = "" end
+  train_target_line.strip!
+
+  if not all_test_source_lines[train_source_line] \
+     and not all_test_target_lines[train_target_line]
+    train_source_out.write train_source_line + "\n"
+    train_target_out.write train_target_line + "\n"
+  end
+end
+
+test_source.close
+test_target.close
+train_source.close
+train_target.close
+train_source_out.close
+train_target_out.close
