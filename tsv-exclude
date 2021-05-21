@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+require 'set'
+
+to_exclude0 = {}
+to_exclude1 = {}
+f = ReadFile.new ARGV[0]
+
+while line = f.gets
+  p0, p1 = line.strip.split "\t"
+  to_exclude0[p0] = true
+  to_exclude1[p1] = true
+end
+
+while line = STDIN.gets
+  p0, p1 = line.strip.split "\t"
+  if not to_exclude0.has_key? p0 and not to_exclude1.has_key? p1
+    puts line
+  end
+end
