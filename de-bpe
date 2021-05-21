@@ -1,4 +1,3 @@
 #!/bin/bash
 
-sed -E "s/(@@ )|(@@$)//g"
-
+sed "s| ||g" | sed "s|▁| |g"
