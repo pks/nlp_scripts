@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+
+require 'zipf'
+
+train_src = ReadFile.new ARGV[0]
+train_tgt = ReadFile.new ARGV[1]
+devtest_src = ReadFile.new ARGV[2]
+devtest_tgt = ReadFile.new ARGV[3]
+
+strict = false
+if ARGV.size == 5
+  strict = true
+end
+
+devtest_h_src = {}
+devtest_h_tgt = {}
+
+while line_src = devtest_src.gets
+  if strict
+    line_src.downcase!
+  end
+  devtest_h_src[line_src] = true
+end
+while line_tgt = devtest_tgt.gets
+  if strict
+    line_tgt.downcase!
+  end
+  devtest_h_tgt[line_tgt] = true
+end
+
+train_src_out = WriteFile.new ARGV[0]+".out"
+train_tgt_out = WriteFile.new ARGV[1]+".out"
+while line_src = train_src.gets
+  line_tgt = train_tgt.gets
+  if strict
+    line_src_downcase = line_src.downcase
+    line_tgt_downcase = line_tgt.downcase
+  else
+    line_src_downcase = line_src
+    line_tgt_downcase = line_tgt
+  end
+  
+  if not devtest_h_src.has_key? line_src_downcase and not devtest_h_src.has_key? line_tgt_downcase \
+ and not devtest_h_tgt.has_key? line_src_downcase and not devtest_h_tgt.has_key? line_tgt_downcase
+    train_src_out.write line_src
+    train_tgt_out.write line_tgt
+  end
+end
