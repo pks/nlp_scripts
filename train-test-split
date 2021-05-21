@@ -9,7 +9,6 @@ conf = Optimist::options do
   opt :size, "one size", :type => :int, :required => true
   opt :repeat, "number of repetitions", :type => :int, :default => 1
   opt :prefix, "prefix for output files", :type => :string
-  opt :sets, "number of sets", :type => :int, :default => 1
 end
 fn = conf[:foreign]
 fn_ext = fn.split('.').last
