@@ -9,5 +9,5 @@ egrep -v -i "^[[:space:]]*(<\?xml.*\?>|</?(mteval|doc|srcset|refset|translator|r
   | sed "s|\s*</speaker>\s*$||" \
   | sed "s|\s*<hl>\s*$||" \
   | sed "s|\s*</hl>\s*$||" \
-  | grep -v -P "^\s*$"
+  | egrep -v -P "^\s*$"
 
