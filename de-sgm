@@ -8,6 +8,5 @@ egrep -v -i "^[[:space:]]*(<\?xml.*\?>|</?(mteval|doc|srcset|refset|translator|r
   | sed "s|<speaker>\s*||" \
   | sed "s|\s*</speaker>\s*$||" \
   | sed "s|\s*<hl>\s*$||" \
-  | sed "s|\s*</hl>\s*$||" \
-  | egrep -v -P "^\s*$"
+  | sed "s|\s*</hl>\s*$||"
 
