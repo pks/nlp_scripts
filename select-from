@@ -11,8 +11,8 @@ opts = Optimist::options do
 end
 
 accept = {}
-f = ReadFile.new opts[:index]
-f.readlines_strip.each { |line|
+f = File.open  opts[:index]
+f.each_line { |line|
   i = line.strip.to_i
 
   accept[i] = true
