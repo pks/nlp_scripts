@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 a = []
 while line = STDIN.gets
@@ -10,4 +10,3 @@ end
 a.sort!
 
 puts a[a.size/2]
-

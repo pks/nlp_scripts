@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
+require "tempfile"
 
 f =  ReadFile.new ARGV[0]
 g =  ReadFile.new ARGV[1]
@@ -17,16 +18,16 @@ while line = f.gets
   sys1 << line1
   sys2 << line2
 
-  ff=File.new("/tmp/refs",'w+');ff.write(refs.join(""));ff.close
-  ff=File.new("/tmp/sys1",'w+');ff.write(sys1.join(""));ff.close
-  ff=File.new("/tmp/sys2",'w+');ff.write(sys2.join(""));ff.close
+  tmp_refs = Tempfile.new("refs"); tmp_refs.write(refs.join("")); tmp_refs.close
+  tmp_sys1 = Tempfile.new("sys1"); tmp_sys1.write(sys1.join("")); tmp_sys1.close
+  tmp_sys2 = Tempfile.new("sys2"); tmp_sys2.write(sys2.join("")); tmp_sys2.close
 
-  #a = `~/multi-bleu.perl /tmp/refs < /tmp/sys1`.split[2].gsub(',','').to_f 
-  a = BLEU::bleu("/tmp/sys1", "/tmp/refs", 4)
-  b = BLEU::bleu("/tmp/sys2", "/tmp/refs", 4)
+  a = BLEU::bleu(tmp_sys1.path, tmp_refs.path, 4)
+  b = BLEU::bleu(tmp_sys2.path, tmp_refs.path, 4)
+
+  tmp_refs.unlink; tmp_sys1.unlink; tmp_sys2.unlink
   diffs << b-a
 
   #puts ((diffs.inject(:+)/diffs.size)*100).round 2
   puts (diffs[-1]*100).round 2
 end
-

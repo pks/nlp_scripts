@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
-require 'zlib'
+require "zipf"
+require "optimist"
+require "zlib"
 
 conf = Optimist::options do
   opt :weights_files, "a number of weights files: name value", :required => true
@@ -30,4 +30,3 @@ h.each_pair { |k,w|
   next if conf[:filter] and w.size < n
   puts "#{k} #{w.inject(:+)/n}"
 }
-

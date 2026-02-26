@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'set'
+require "zipf"
+require "set"
 
 to_exclude = {}
 f = ReadFile.new ARGV[0]
@@ -14,4 +14,3 @@ while line = STDIN.gets
     puts line
   end
 end
-

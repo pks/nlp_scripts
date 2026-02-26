@@ -3,6 +3,5 @@
 i = 0
 while line = STDIN.gets
   puts "#{i}\t#{line}"
-  i += 1  
+  i += 1
 end
-

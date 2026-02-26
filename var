@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'optimist'
+require "optimist"
 
 conf = Optimist::options do
   banner "stddev [-r <d>] < <one number per line>"
@@ -32,4 +32,3 @@ if conf[:round] >= 0
 else
   puts var
 end
-

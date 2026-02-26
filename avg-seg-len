@@ -6,4 +6,3 @@ while line = STDIN.gets
 end
 
 puts lens.inject(:+)/lens.size.to_f
-

@@ -3,4 +3,3 @@
 while line = STDIN.gets
   puts line.strip
 end
-

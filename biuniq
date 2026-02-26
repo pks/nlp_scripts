@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 f1 = ReadFile.new ARGV[0]
 f2 = ReadFile.new ARGV[1]
@@ -16,7 +16,7 @@ while line1 = f1.gets
   line2 = f2.gets
   if line2 == nil then line2 = "" end
   line2.strip!
-  
+
   if !d1.include? line1 and !d2.include? line2
     a1 << line1
     a2 << line2
@@ -33,4 +33,3 @@ a1.each_with_index { |line1,i|
   o1.write line1 + "\n"
   o2.write a2[i] + "\n"
 }
-

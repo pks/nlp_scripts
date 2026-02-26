@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
 
-max = -1.0/0
+max = -Float::INFINITY
 while line = STDIN.gets
   v = line.to_f
   max = v if v > max
 end
 
 puts max
-

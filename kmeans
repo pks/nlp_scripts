@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
+require "zipf"
+require "optimist"
 
 def read_data fn
   data = {}
   ReadFile.new(fn).readlines_strip.map{ |i|
-    a = i.split ' ', 2
+    a = i.split " ", 2
     v = SparseVector.from_kv a.last
     data[a.first] = v
   }
@@ -30,7 +30,7 @@ end
 def assign centroids, data
   assignment = {}
   data.each_pair { |name,feature_vector|
-      min = 1.0/0
+      min = Float::INFINITY
       min_index = nil
       centroids.each_with_index { |c,i|
         dist = c.euclidian_dist(feature_vector)
@@ -61,10 +61,10 @@ def main
     opt :k, "k", :type => :int, :required => true
     opt :input, "input: one feature vector per line", :type => :string, :required => true
     opt :max_iterations, "max. number of iterations", :type => :int, :default => 100
-    opt :max_no_change, "max. No of stalled iterations before stopping ", :type => :int, :short => '-n', :default => 3
-    opt :init, "centroid initialization (1: sample k features vectors, 2: k-times do sample k feature and build mean)", :type => :int, :short => '-j', :default => 2
+    opt :max_no_change, "max. No of stalled iterations before stopping ", :type => :int, :short => "-n", :default => 3
+    opt :init, "centroid initialization (1: sample k features vectors, 2: k-times do sample k feature and build mean)", :type => :int, :short => "-j", :default => 2
   end
-  # data is 'ID f1=v1 f2=v2'
+  # data is "ID f1=v1 f2=v2"
   data = read_data conf[:input]
   k = conf[:k]
   centroids = nil
@@ -86,7 +86,7 @@ def main
   STDERR.write "expected cluster sz=#{data.size/k.to_f}\n\n"
   0.upto(conf[:max_iterations]) do |i|
     s = "iteration #{i}"
-    STDERR.write "#{s}\n#{'-'*s.size}\n"
+    STDERR.write "#{s}\n#{"-" * s.size}\n"
     assignment = assign centroids, data
     sizes = []
     assignment.each_pair { |centroid_index, a|
@@ -114,4 +114,3 @@ def main
 end
 
 main
-

@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
+require "zipf"
+require "optimist"
 
 def main
   conf = Optimist::options do
-    opt :kbests, "kbests", :type => :string, :default => '-'
+    opt :kbests, "kbests", :type => :string, :default => "-"
     opt :references, "references", :type => :string, :required => true
   end
   refs = ReadFile.new conf[:references]
@@ -19,7 +19,7 @@ def main
     scores.each_with_index { |x,j|
       puts "#{j+1} ||| #{scores[j]} ||| #{list[j]}"
       if scores[j]==max && !o
-        puts "^^^ #{j+1} #{max}" 
+        puts "^^^ #{j+1} #{max}"
         o = true
       end
     }
@@ -29,4 +29,3 @@ def main
 end
 
 main
-

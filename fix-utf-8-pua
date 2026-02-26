@@ -7,4 +7,3 @@ while line = STDIN.gets
   line.gsub! /[\u{e000}-\u{f8ff}]/, " "
   puts line
 end
-

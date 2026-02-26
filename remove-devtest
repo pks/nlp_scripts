@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 train_src = ReadFile.new ARGV[0]
 train_tgt = ReadFile.new ARGV[1]
@@ -39,7 +39,7 @@ while line_src = train_src.gets
     line_src_downcase = line_src
     line_tgt_downcase = line_tgt
   end
-  
+
   if not devtest_h_src.has_key? line_src_downcase and not devtest_h_src.has_key? line_tgt_downcase \
  and not devtest_h_tgt.has_key? line_src_downcase and not devtest_h_tgt.has_key? line_tgt_downcase
     train_src_out.write line_src

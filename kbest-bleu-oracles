@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
+require "zipf"
+require "optimist"
 
 def get_context kbest_lists, references, n
   a = []
@@ -48,4 +48,3 @@ def main
 end
 
 main
-

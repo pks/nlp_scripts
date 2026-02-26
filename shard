@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'optimist'
+require "optimist"
 
 def make_shards(input, refs, alignments, output_prefix, num_shards=2, rand=false)
   lc = `wc -l #{input}`.split.first.to_i
-  input_ext = input.split('.').last
-  refs_ext = refs.split('.').last
+  input_ext = input.split(".").last
+  refs_ext = refs.split(".").last
   index = (0..lc-1).to_a
   index.reverse!
   index.shuffle! if rand
@@ -68,13 +68,12 @@ def make_shards(input, refs, alignments, output_prefix, num_shards=2, rand=false
 end
 
 opts = Optimist::options do
-  opt :input, 'input', :type => :string, :required => true
-  opt :references, 'references', :type => :string, :required => true
-  opt :alignments, 'alignments', :type => :string, :required => true
-  opt :output_prefix, 'output prefix', :type => :string, :required => true
-  opt :randomize, 'randomize', :type => :bool, :default => false, :short => '-z'
-  opt :num_shards, 'number of shards', :type => :int, :required => true
+  opt :input, "input", :type => :string, :required => true
+  opt :references, "references", :type => :string, :required => true
+  opt :alignments, "alignments", :type => :string, :required => true
+  opt :output_prefix, "output prefix", :type => :string, :required => true
+  opt :randomize, "randomize", :type => :bool, :default => false, :short => "-z"
+  opt :num_shards, "number of shards", :type => :int, :required => true
 end
 
 make_shards(opts[:input], opts[:references], opts[:alignments], opts[:output_prefix], opts[:num_shards], opts[:randomize])
-

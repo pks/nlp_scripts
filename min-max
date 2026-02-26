@@ -1,15 +1,15 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
+require "zipf"
+require "optimist"
 
 conf = Optimist::options do
   opt :min, "minimum #tokens", :type => :int, :default => 1
-  opt :max, "maximum #tokens", :type => :int, :default => 80, :short => '-n'
-  opt :in_f, "input 'French' file", :type => :string, :required => true
-  opt :in_e, "input 'English' file", :type => :string, :required => true
-  opt :out_f, "output 'French' file", :type => :string, :required => true
-  opt :out_e, "output 'English' file", :type => :string, :required => true
+  opt :max, "maximum #tokens", :type => :int, :default => 80, :short => "-n"
+  opt :in_f, "input French file", :type => :string, :required => true
+  opt :in_e, "input English file", :type => :string, :required => true
+  opt :out_f, "output French file", :type => :string, :required => true
+  opt :out_e, "output English file", :type => :string, :required => true
   opt :out_id, "output line Nos", :type => :string, :required => true
 end
 
@@ -37,4 +37,3 @@ while f_line = files[:f_file].gets
 end
 
 files.values.each{ |f| f.close }
-

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 a = ReadFile.readlines_strip ARGV[0]
 h = {}
@@ -21,4 +21,3 @@ while line = STDIN.gets
     puts line
   end
 end
-

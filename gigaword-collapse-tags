@@ -2,8 +2,8 @@
 
 # works with gigaword en v5
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
+STDIN.set_encoding "utf-8"
+STDOUT.set_encoding "utf-8"
 
 in_p = false
 in_dateline = false
@@ -36,4 +36,3 @@ while line = STDIN.gets
    puts line
  end
 end
-

@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'optimist'
-require 'zipf'
+require "optimist"
+require "zipf"
 
 opts = Optimist::options do
   banner "sample --index <n> [--shuffle] [--file <line separated data>]"
-  opt :file, "Input file.", :type => :string, :default => '-'
+  opt :file, "Input file.", :type => :string, :default => "-"
   opt :index, "Index file.", :type => :string, :required => true
 end
 
@@ -15,4 +15,3 @@ index = ReadFile.readlines_strip(opts[:index]).map{ |i| i.to_i }
 index.each { |i|
   puts input[i]
 }
-

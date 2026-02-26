@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
+require "zipf"
+require "optimist"
 
 def main
   conf = Optimist::options do
@@ -15,8 +15,8 @@ def main
   stopwords = []
   if conf[:filter_stopwords]
     stopwords = ReadFile.readlines(conf[:filter_stopwords]).map{ |i|
-      i.split('|').first.strip
-    }.reject{ |i| i=='' }
+      i.split("|").first.strip
+    }.reject{ |i| i=="" }
   end
 
   docs = {}
@@ -54,4 +54,3 @@ def main
 end
 
 main
-

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'optimist'
+require "optimist"
 
 def main
   conf = Optimist::options do
@@ -30,4 +30,3 @@ def main
 end
 
 main
-

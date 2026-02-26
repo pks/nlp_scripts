@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 windows = []
 cur = []
@@ -9,7 +9,7 @@ while line = STDIN.gets
   if cur_sz >= 1000
     windows << cur
     cur = []
-    cur_sz = 0 
+    cur_sz = 0
   end
   cur << line.strip
   cur_sz += cur.last.split.size
@@ -37,8 +37,7 @@ windows.each { |w|
 
 rr = 1.0
 enums.each_with_index { |i,j|
-  rr *= i/denoms[j] 
+  rr *= i/denoms[j]
 }
 
 puts ((rr**0.25)*100).round 2
-

@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'set'
-require 'zipf'
-require 'optimist'
+require "set"
+require "zipf"
+require "optimist"
 
 conf = Optimist::options do
   opt :n, "Desired number segments in test set.", :type => :int, :required => true
@@ -50,4 +50,3 @@ outputs.each_with_index { |o,i|
     f.write o[0][j] + "\t" + o[1][j] + "\n"
   }
 }
-

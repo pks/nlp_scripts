@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
+STDIN.set_encoding "utf-8"
+STDOUT.set_encoding "utf-8"
 
 def shape s
   res  = []
@@ -24,6 +24,5 @@ end
 while line = STDIN.gets
   f, e = line.split(/\t/)
   f.strip!; e.strip!
-  puts shape(f).join('_')+"-"+shape(e).join('_')
+  puts shape(f).join("_")+"-"+shape(e).join("_")
 end
-

@@ -1,9 +1,9 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
-require 'htmlentities'
+require "htmlentities"
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
+STDIN.set_encoding "utf-8"
+STDOUT.set_encoding "utf-8"
 
 
 coder = HTMLEntities.new
@@ -11,4 +11,3 @@ coder = HTMLEntities.new
 while line = STDIN.gets
   puts coder.decode(line.strip)
 end
-

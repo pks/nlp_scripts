@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'set'
+require "zipf"
+require "set"
 
 to_exclude0 = {}
 to_exclude1 = {}

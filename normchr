@@ -3,10 +3,10 @@
 # http://www.utf8-chartable.de/unicode-utf8-table.pl?start=8192&number=128&utf8=string-literal
 # https://www.cs.tut.fi/~jkorpela/chars/spaces.html
 
-require 'htmlentities'
+require "htmlentities"
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
+STDIN.set_encoding "utf-8"
+STDOUT.set_encoding "utf-8"
 
 coder = HTMLEntities.new
 
@@ -24,7 +24,7 @@ while line = STDIN.gets
   line.gsub! /[\u{e000}-\u{f8ff}]/, " " # UTF-8 PUA
   line.gsub! /[\u{f0000}-\u{ffffd}]/, " "
   line.gsub! /[\u{100000}-\u{10fffd}]/, " "
-  line.gsub! "\r", " "                  # carriage return  
+  line.gsub! "\r", " "                  # carriage return
   line.gsub! /[\u{2000}-\u{200f}]/, " " #                   EN QUAD -- RIGHT-TO-LEFT MARK
   line.gsub! /[\u{2028}-\u{202f}]/, " " #            LINE SEPARATOR -- NARROW NO-BREAK SPACE
   line.gsub! /[\u{205f}-\u{206f}]/, " " # MEDIUM MATHEMATICAL SPACE -- NOMINAL DIGIT SHAPES
@@ -32,4 +32,3 @@ while line = STDIN.gets
   line.gsub! /[[:space:]]+/, " "        # collapse space
   puts coder.decode(line)
 end
-

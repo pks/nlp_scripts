@@ -7,4 +7,3 @@ while line = STDIN.gets
 end
 
 h.sort_by { |name, value| -value }.each { |name, value| puts "#{name}\t#{value}" }
-

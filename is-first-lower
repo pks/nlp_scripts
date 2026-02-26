@@ -1,11 +1,10 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 while line = STDIN.gets
   line.strip!
-  if line && line!='' && line[0].downcase?
+  if line && line!="" && line[0].downcase?
     puts line
   end
 end
-

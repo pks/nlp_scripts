@@ -8,4 +8,3 @@ $HADOOP_HOME/bin/hadoop  jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
     -output d.uniq \
     -mapper 'cut -d " " -f 1' \
     -reducer /usr/bin/uniq
-

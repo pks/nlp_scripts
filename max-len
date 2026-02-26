@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 max = ARGV[0].to_i
 
 i = 0
-while line = STDIN.gets 
+while line = STDIN.gets
   if tokenize(line).size <= max
     puts i
   else
@@ -13,4 +13,3 @@ while line = STDIN.gets
   end
   i += 1
 end
-

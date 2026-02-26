@@ -14,4 +14,3 @@ while line = STDIN.gets
     puts a.size
   end
 end
-

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
+require "zipf"
+require "optimist"
 
 def main
   conf = Optimist::options do
@@ -17,8 +17,8 @@ def main
     opt :reverse, "length ratios alway > 1", :type => :bool, :default => false, :short => "-r"
   end
 
-  fna,fnb = conf[:inputs].split ','
-  a = ReadFile.new fna 
+  fna,fnb = conf[:inputs].split ","
+  a = ReadFile.new fna
   b = ReadFile.new fnb
 
   if not conf[:output_index]
@@ -62,4 +62,3 @@ def main
 end
 
 main
-

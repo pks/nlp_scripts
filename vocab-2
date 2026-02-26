@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 d = {}
 while line = STDIN.gets
@@ -10,4 +10,3 @@ while line = STDIN.gets
 end
 
 puts d.size
-

@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
+require "zipf"
+require "optimist"
 
 def main
   conf = Optimist::options do
-    opt :input, "input", :type => :string, :default => '-'
+    opt :input, "input", :type => :string, :default => "-"
     opt :references, "references", :type => :string, :required => true
     opt :len_hack, "hack of Nakov et al", :type => :int, :default => 0
     opt :n, "N", :default => 4
@@ -16,7 +16,7 @@ def main
   input = ReadFile.new conf[:input]
   while line = input.gets
     i += 1
-    if line.strip == ''
+    if line.strip == ""
       puts 0.0
       next
     end
@@ -26,4 +26,3 @@ def main
 end
 
 main
-

@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
-require 'bloom-filter'
-require 'optimist'
+require "bloom-filter"
+require "optimist"
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
+STDIN.set_encoding "utf-8"
+STDOUT.set_encoding "utf-8"
 
 conf = Optimist::options do
   opt :size, "number of entries in the filter", :type => :int, :required => true
@@ -19,6 +19,5 @@ while line = STDIN.gets
   f.insert(src+" ||| "+tgt)
 end
 
-f.dump('pt.bloom')
+f.dump("pt.bloom")
 f.close
-

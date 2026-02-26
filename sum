@@ -6,4 +6,3 @@ while line = STDIN.gets
 end
 
 puts sum
-

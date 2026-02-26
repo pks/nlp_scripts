@@ -2,7 +2,7 @@
 
 #################################################
 # reads space delimted pairs of scores as input,
-# outputs Kendall's τ
+# outputs Kendall"s τ
 #################################################
 
 def kendall_with_ties l
@@ -13,7 +13,7 @@ def kendall_with_ties l
   l.each_with_index { |k,i|
     l[i+1,l.size].each_with_index { |m,j|
       if (k.first < m.first && k[1] < m[1]) ||
-         (k.first > m.first && k[1] > m[1]) 
+         (k.first > m.first && k[1] > m[1])
         concordant += 1
       elsif (k.first == m.first && k[1] != m[1])
         tie_a += 1
@@ -24,7 +24,7 @@ def kendall_with_ties l
       end
     }
   }
- 
+
   return (concordant-disconcordant)/(Math.sqrt((concordant+disconcordant+tie_a)*(concordant+disconcordant+tie_b)))
 end
 
@@ -34,7 +34,7 @@ def kendall l
   l.each_with_index { |k,i|
     l[i+1,l.size].each_with_index { |m,j|
       if (k.first <= m.first && k[1] <= m[1]) ||
-         (k.first >= m.first && k[1] >= m[1]) 
+         (k.first >= m.first && k[1] >= m[1])
         concordant += 1
       else
         disconcordant += 1
@@ -60,7 +60,7 @@ def main
     a,b = line.split
     l << [a.to_f, b.to_f]
   end
-  
+
   v = -1
   if has_ties? l
     v = kendall_with_ties l
@@ -72,4 +72,3 @@ def main
 end
 
 main
-

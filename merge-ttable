@@ -1,20 +1,20 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
+require "zipf"
+require "optimist"
 
 def main
   conf = Optimist::options do
     opt :f, "f files", :type => :string, :required => true
     opt :e, "e files", :type => :string, :required => true
   end
-  
+
   f_files = conf[:f].split
   e_files = conf[:e].split
-  
+
   h = {}
   f_files.each_with_index { |fn,i|
-    fa = ReadFile.readlines_strip fn 
+    fa = ReadFile.readlines_strip fn
     ea = ReadFile.readlines_strip e_files[i]
     fa.each_with_index { |fw,j|
       if h.has_key? fw
@@ -24,11 +24,10 @@ def main
       end
     }
   }
-  
+
   h.each_pair { |f,ea|
-    puts "#{f}\t#{ea.first}" 
-  } 
+    puts "#{f}\t#{ea.first}"
+  }
 end
 
 main
-

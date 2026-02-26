@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 illegal = [ "[", "]", "|||" ]
 
@@ -15,11 +15,10 @@ while line0 = in0.gets
   illegal.each { |k|
     if line0.index(k) or line1.index(k) then
       skip = true
-      skipi << i 
+      skipi << i
     end
   }
   i += 1
 end
 
 skipi.each { |j| puts j }
-

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'set'
+require "set"
 
 strictness = ARGV[0].to_i # 1 one-side
                           # 2 just the pair
@@ -21,14 +21,14 @@ if strictness == 1
   seen = Set.new
   segments[side].each_with_index { |segment,i|
     if not seen.include? segment
-      puts "#{segments[i][0]}\t#{segments[i][1]}"
+      puts "#{segments[0][i]}\t#{segments[1][i]}"
     end
     seen << segment
   }
 elsif strictness == 2
   seen = Set.new
   segments[0].each_index { |i|
-    segment_pair = [segments[i][0], segments[i][1]]
+    segment_pair = [segments[0][i], segments[1][i]]
     if not seen.include? segment_pair
       puts "#{segment_pair[0]}\t#{segment_pair[1]}"
     end
@@ -46,4 +46,3 @@ elsif strictness == 3
     seen_pairs << segment_pair
   }
 end
-

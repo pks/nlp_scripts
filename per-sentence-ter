@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
-require 'tempfile'
+require "zipf"
+require "optimist"
+require "tempfile"
 
 def main
   conf = Optimist::options do
-    opt :input, "input", :type => :string, :default => '-'
+    opt :input, "input", :type => :string, :default => "-"
     opt :references, "references", :type => :string, :required => true
-    opt :mteval_bin, "cdec's mteval/fast_score", :type => :string, :default => '`/toolbox/cdec-dtrain/mteval/fast_score'
+    opt :mteval_bin, "cdec mteval/fast_score", :type => :string, :default => "`/toolbox/cdec-dtrain/mteval/fast_score"
   end
 
   refs = ReadFile.readlines_strip conf[:references]
@@ -17,8 +17,8 @@ def main
   while line = input.gets
     line.strip!
     i += 1
-    a = Tempfile.new 'pster'
-    b = Tempfile.new 'pster'
+    a = Tempfile.new "pster"
+    b = Tempfile.new "pster"
     a.write line+"\n"
     b.write refs[i]+"\n"
     a.close; b.close
@@ -30,4 +30,3 @@ def main
 end
 
 main
-

@@ -73,4 +73,3 @@ parser.parse(open(sys.argv[1]))
 
 sfile.close()
 tfile.close()
-

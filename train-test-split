@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'optimist'
+require "zipf"
+require "optimist"
 
 conf = Optimist::options do
   opt :source, "source file", :type => :string, :required => true
@@ -13,11 +13,11 @@ conf = Optimist::options do
 end
 
 source_filename = conf[:source]
-source_extension = source_filename.split('.').last
+source_extension = source_filename.split(".").last
 source_lines = ReadFile.readlines source_filename
 
 target_filename = conf[:target]
-target_extension = target_filename.split('.').last
+target_extension = target_filename.split(".").last
 target_lines = ReadFile.readlines target_filename
 
 size = conf[:size]

@@ -1,15 +1,15 @@
 #!/usr/bin/env ruby
 
-require 'optimist'
+require "optimist"
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
+STDIN.set_encoding "utf-8"
+STDOUT.set_encoding "utf-8"
 
 opts = Optimist::options do
   banner "sample --size <n> [--shuffle] --file <line separated data>"
   opt :size, "Sample P % or # lines from file or N.", :type => :float
   opt :shuffle, "Sample is shuffled.", :type => :bool
-  opt :file, "Input file.", :type => :string, :default => '-'
+  opt :file, "Input file.", :type => :string, :default => "-"
   opt :output_index, "Output index number.", :type => :bool
   opt :N, "Sample --size from N items.", :type => :int, :default => -1
   opt :absolute, "Sample absolute number of items.", :type => :bool
@@ -19,10 +19,10 @@ input = []
 index = []
 i = 0
 if opts[:N] == -1
-  if opts[:file] == '-'
+  if opts[:file] == "-"
     file = STDIN
   else
-    file = File.new opts[:file], 'r'
+    file = File.new opts[:file], "r"
   end
   while line = file.gets
     input << line
@@ -35,7 +35,6 @@ end
 
 sample = []
 if !opts[:absolute]
-  sample = index.sample(index.size*(opts[:size]/100.0))
   sample = index.sample(index.size*(opts[:size]/100.0))
 else
   sample = index.sample(opts[:size])
@@ -56,4 +55,3 @@ while idx = sample.shift
     end
   end
 end
-

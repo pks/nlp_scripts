@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'set'
-require 'zipf'
+require "set"
+require "zipf"
 
 n = ARGV.pop.to_i
 
@@ -27,4 +27,3 @@ all_sets.each { |set|
 joint_set.each { |i|
   puts i
 }
-

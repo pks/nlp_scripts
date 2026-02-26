@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 def mkrf src, tgt
   s = src.gsub /\[X,[1-9]\]/, "NX"
-  t = tgt.gsub /\[X,([1-9])\]/,'N\1'
+  t = tgt.gsub /\[X,([1-9])\]/,"N\1"
   return "R:X:#{s.gsub(" ","_")}:#{t.gsub(" ","_")}"
 end
 
@@ -13,7 +13,7 @@ def mkrbf s, t
   if t == "S"
     s.gsub! /\[X,[1-9]\]/, "X"
   else
-    s.gsub! /\[X,([1-9])\]/, 'X\1' 
+    s.gsub! /\[X,([1-9])\]/, "X\1"
   end
   s.reverse!
   s += " >r<"
@@ -41,4 +41,3 @@ while line = STDIN.gets
 end
 
 h.keys.each { |f| puts f }
-

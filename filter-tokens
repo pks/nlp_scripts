@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 bad_words = {}
 ReadFile.readlines_strip(ARGV[0]).each { |line|
@@ -13,11 +13,10 @@ while line = STDIN.gets
   tokens = line.split
   bad_words.keys.each { |w|
     if tokens.include? w
-      bad = true 
+      bad = true
       break
     end
   }
   puts i if bad
   i += 1
 end
-

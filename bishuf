@@ -15,4 +15,3 @@ get_random() { seed="$1"; openssl enc -aes-256-ctr -pass pass:"$seed" -nosalt < 
 echo "shuffling ..."
 $SHUF --random-source=<(get_random 42) $1 > $1.shuf
 $SHUF --random-source=<(get_random 42) $2 > $2.shuf
-

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
+STDIN.set_encoding "utf-8"
+STDOUT.set_encoding "utf-8"
 
 h = {}
 h.default = 0
@@ -11,4 +11,3 @@ while line = STDIN.gets
 end
 
 h.each_pair { |k,v| puts "#{k} #{v}" }
-

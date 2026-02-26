@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 def write_kbest l, fn
   f = WriteFile.new fn
@@ -21,4 +21,3 @@ while line = STDIN.gets
   l << line
 end
 write_kbest l, "#{dir}/#{i}.gz" # last one
-

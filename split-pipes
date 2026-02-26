@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'optimist'
+require "optimist"
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
+STDIN.set_encoding "utf-8"
+STDOUT.set_encoding "utf-8"
 
 conf = Optimist::options do
   banner "splitpipes -f <n> < <input>"
@@ -32,10 +32,10 @@ end
 
 while line = STDIN.gets
   j = 1
-  line.strip.split(' ||| ').each { |i|
+  line.strip.split(" ||| ").each { |i|
     if range && (conf[:field]..conf[:to]).include?(j)
       a << i.strip
-    elsif j == conf[:field] 
+    elsif j == conf[:field]
       puts i.strip
       break
     end
@@ -46,6 +46,3 @@ while line = STDIN.gets
   end
   a.clear
 end
-
-
-

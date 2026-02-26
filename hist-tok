@@ -21,4 +21,3 @@ sorted.sort_by! { |i|
 sorted.each { |i|
   puts "#{i[0]}\t#{i[1]}"
 }
-

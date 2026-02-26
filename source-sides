@@ -1,4 +1,3 @@
-#!/bin/zsh -x
+#!/bin/zsh
 
 split_pipes -f 2 | sort | uniq | sed "s| |_|g" | sed "s|\[X,[12]\]|NX|g"
-

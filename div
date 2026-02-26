@@ -5,4 +5,3 @@ exit if factor==0
 while line = STDIN.gets
   puts line.to_f / factor
 end
-

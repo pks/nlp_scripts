@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'matrix'
-require 'optimist'
+require "zipf"
+require "matrix"
+require "optimist"
 
 def read_data fn
   f = ReadFile.new fn
@@ -30,7 +30,7 @@ def approx_eql x, y, eps=10**-10
   return false if !x||!y
   return false if x.size!=y.size
   x.each_with_index { |_,i|
-    return false if (x[i]-y[i]).abs>eps 
+    return false if (x[i]-y[i]).abs>eps
   }
   return true
 end
@@ -48,7 +48,7 @@ def main
   prev_model = nil
   gradient = Vector.elements zeros
   hessian = Matrix.build(dim,dim) { |i,j| 0.0 }
-  i = 0 
+  i = 0
   while true
     i += 1
     data.each_with_index { |x,j|
@@ -68,4 +68,3 @@ def main
 end
 
 main
-

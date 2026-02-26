@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
-require 'script_detector'
+require "zipf"
+require "script_detector"
 
 $to_code = {}
 $to_code["Ambiguous Chinese"] = "??"
@@ -15,4 +15,3 @@ while line = STDIN.gets
   code = $to_code[line.identify_script]
   puts code
 end
-

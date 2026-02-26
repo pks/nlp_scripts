@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zipf'
+require "zipf"
 
 prev_idx = nil
 while line = STDIN.gets
@@ -11,4 +11,3 @@ while line = STDIN.gets
     prev_idx = idx
   end
 end
-

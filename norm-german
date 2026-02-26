@@ -1,23 +1,23 @@
 #!/usr/bin/env ruby
 
-require 'thread'
-require 'optimist'
+require "thread"
+require "optimist"
 
-STDIN.set_encoding 'utf-8'
-STDOUT.set_encoding 'utf-8'
+STDIN.set_encoding "utf-8"
+STDOUT.set_encoding "utf-8"
 
 
 conf = Optimist::options do
   banner "norm_german < <file w/ lowercased tokens>"
   opt :upper, "uppercase", :type => :bool, :default => false
-  opt :threads, "#threads", :type => :int, :default => 1, :short => '-h'
+  opt :threads, "#threads", :type => :int, :default => 1, :short => "-h"
   opt :shard_size, "shard size", :type => :int, :default => 1000
   opt :train, "train", :type => :bool
   opt :apply, "apply", :type => :bool
 end
 
-pairs_lower = [ ['ß','ss'], ['ue', 'ü'], ['ae','ä'], ['oe', 'ö'] ]
-pairs_upper = [ ['Ä', 'Ae'], ['Ö', 'Oe'], ['Ü', 'Ue'] ]
+pairs_lower = [ ["ß","ss"], ["ue", "ü"], ["ae","ä"], ["oe", "ö"] ]
+pairs_upper = [ ["Ä", "Ae"], ["Ö", "Oe"], ["Ü", "Ue"] ]
 if conf[:upper]
   PAIRS = pairs_lower
 else
@@ -84,4 +84,3 @@ token_stock.each { |i|
     h.merge! build_partial i
   end
 }
-
